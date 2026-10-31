@@ -1,0 +1,221 @@
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN PAYMENT
+   DESKTOP CSS
+   FILE: pembelian-payment-desktop.css
+====================================== */
+
+@media (min-width: 769px) {
+
+    /* ======================================
+       PAYMENT TABLE
+    ====================================== */
+
+    #pembelian-payments {
+        width: 100%;
+    }
+
+    .pembelian-page table tbody#pembelian-payments td {
+        padding: 12px;
+        vertical-align: middle;
+    }
+
+    #pembelian-payments select[data-payment-field="metode"] {
+        width: 100%;
+        min-width: 145px;
+        height: 40px;
+        padding: 0 12px;
+        color: #17221e;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+        border-radius: 9px;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 13px;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    #pembelian-payments select[data-payment-field="metode"]:hover {
+        border-color: #a9c7b8;
+    }
+
+    #pembelian-payments select[data-payment-field="metode"]:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    /* ======================================
+       PAYMENT NOMINAL
+    ====================================== */
+
+    .pembelian-payment-nominal {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .pembelian-payment-money {
+        display: inline-flex;
+        flex: 0 0 38px;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        color: #047857;
+        background: #ecfdf5;
+        border: 1px solid #bbf7d0;
+        border-radius: 9px;
+        cursor: pointer;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .pembelian-payment-money svg {
+        display: block;
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+    }
+
+    .pembelian-payment-money:hover {
+        color: #ffffff;
+        background: #059669;
+        border-color: #059669;
+        box-shadow: 0 3px 8px rgba(5, 150, 105, 0.18);
+        transform: translateY(-1px);
+    }
+
+    .pembelian-payment-money:active {
+        transform: translateY(0);
+    }
+
+    .pembelian-payment-money:focus-visible {
+        outline: 3px solid rgba(16, 185, 129, 0.22);
+        outline-offset: 2px;
+    }
+
+    #pembelian-payments input[data-payment-field="nominal"] {
+        width: 100%;
+        min-width: 100px;
+        height: 40px;
+        padding: 0 12px;
+        color: #17221e;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+        border-radius: 9px;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 13px;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    #pembelian-payments input[data-payment-field="nominal"]:hover {
+        border-color: #a9c7b8;
+    }
+
+    #pembelian-payments input[data-payment-field="nominal"]:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    /* ======================================
+       REMOVE PAYMENT BUTTON
+    ====================================== */
+
+    .pembelian-payment-remove {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        color: #dc2626;
+        background: #fff5f5;
+        border: 1px solid #fee2e2;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .pembelian-payment-remove:hover {
+        color: #ffffff;
+        background: #dc2626;
+        border-color: #dc2626;
+        transform: translateY(-1px);
+    }
+
+    .pembelian-payment-remove:active {
+        transform: translateY(0);
+    }
+
+    .pembelian-payment-remove:focus-visible {
+        outline: 3px solid rgba(220, 38, 38, 0.18);
+        outline-offset: 2px;
+    }
+
+    /* ======================================
+       MEDIUM DESKTOP
+    ====================================== */
+
+    @media (min-width: 769px) and (max-width: 1100px) {
+
+        #pembelian-payments select[data-payment-field="metode"] {
+            min-width: 120px;
+        }
+
+        .pembelian-payment-nominal {
+            gap: 7px;
+        }
+
+        .pembelian-payment-money {
+            flex-basis: 34px;
+            width: 34px;
+            height: 36px;
+        }
+
+        #pembelian-payments input[data-payment-field="nominal"] {
+            min-width: 80px;
+            padding: 0 8px;
+        }
+
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        #pembelian-payments select,
+        #pembelian-payments input,
+        .pembelian-payment-money,
+        .pembelian-payment-remove {
+            transition: none;
+        }
+
+    }
+
+}

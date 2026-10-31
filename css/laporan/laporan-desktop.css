@@ -1,0 +1,696 @@
+/* ======================================
+   TREEHOUSE POS
+   LAPORAN PEMBELIAN
+   DESKTOP CSS
+   FILE: laporan-pembelian-desktop.css
+====================================== */
+
+@media (min-width: 769px) {
+
+    /* ======================================
+       MODAL OVERLAY
+    ====================================== */
+
+    .laporan-pembelian-modal[hidden] {
+        display: none !important;
+    }
+
+    .laporan-pembelian-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        box-sizing: border-box;
+    }
+
+    .laporan-pembelian-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 20, 0.58);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .laporan-pembelian-modal-container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        width: min(1440px, 100%);
+        height: min(900px, 100%);
+        min-height: 0;
+        overflow: hidden;
+        background: #f8fbfa;
+        border: 1px solid rgba(214, 226, 221, 0.9);
+        border-radius: 20px;
+        box-shadow:
+            0 24px 80px rgba(0, 0, 0, 0.2),
+            0 2px 8px rgba(23, 34, 30, 0.08);
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       PAGE HEADER
+    ====================================== */
+
+    .laporan-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-shrink: 0;
+        padding: 24px 30px;
+        background:
+            radial-gradient(
+                circle at 90% 0%,
+                rgba(16, 185, 129, 0.1),
+                transparent 34%
+            ),
+            #ffffff;
+        border-bottom: 1px solid #d6e2dd;
+    }
+
+    .laporan-page-header h2 {
+        margin: 0;
+        color: #086845;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.5px;
+    }
+
+    .laporan-page-header p {
+        margin: 7px 0 0;
+        color: #68766f;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* ======================================
+       MODAL BODY
+    ====================================== */
+
+    .laporan-pembelian-modal-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        padding: 24px 30px 30px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: #b8cec2 #edf3ef;
+        box-sizing: border-box;
+    }
+
+    .laporan-pembelian-modal-body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .laporan-pembelian-modal-body::-webkit-scrollbar-track {
+        background: #edf3ef;
+        border-radius: 8px;
+    }
+
+    .laporan-pembelian-modal-body::-webkit-scrollbar-thumb {
+        background: #b8cec2;
+        border: 2px solid #edf3ef;
+        border-radius: 8px;
+    }
+
+    .laporan-pembelian-modal-body::-webkit-scrollbar-thumb:hover {
+        background: #8eafa0;
+    }
+
+    /* ======================================
+       CARDS
+    ====================================== */
+
+    .laporan-pembelian-modal .laporan-card {
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 22px;
+        padding: 22px;
+        background: linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f9fcfa 100%
+        );
+        border: 1px solid #d6e2dd;
+        border-radius: 16px;
+        box-shadow:
+            0 2px 5px rgba(23, 34, 30, 0.025),
+            0 10px 26px rgba(23, 34, 30, 0.04);
+        box-sizing: border-box;
+    }
+
+    .laporan-pembelian-modal .laporan-card:last-child {
+        margin-bottom: 0;
+    }
+
+    .laporan-pembelian-modal .laporan-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        min-width: 0;
+        margin-bottom: 20px;
+    }
+
+    .laporan-pembelian-modal .laporan-card-header h3 {
+        position: relative;
+        margin: 0;
+        padding-left: 13px;
+        color: #084b32;
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .laporan-pembelian-modal .laporan-card-header h3::before {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        left: 0;
+        width: 4px;
+        background: linear-gradient(
+            180deg,
+            #34d399,
+            #059669
+        );
+        border-radius: 4px;
+        content: "";
+    }
+
+    /* ======================================
+       HEADER ACTIONS
+    ====================================== */
+
+    .laporan-pembelian-modal .laporan-page-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .laporan-pembelian-modal .laporan-laporan-button,
+    .laporan-pembelian-modal .laporan-close-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .laporan-pembelian-modal .laporan-laporan-button {
+        color: #ffffff;
+        background: linear-gradient(
+            135deg,
+            #10b981,
+            #059669
+        );
+        border: 1px solid #059669;
+        box-shadow: 0 4px 10px rgba(5, 150, 105, 0.16);
+    }
+
+    .laporan-pembelian-modal .laporan-laporan-button:hover {
+        background: linear-gradient(
+            135deg,
+            #059669,
+            #047857
+        );
+        box-shadow: 0 6px 14px rgba(5, 150, 105, 0.22);
+        transform: translateY(-1px);
+    }
+
+    .laporan-pembelian-modal .laporan-close-button {
+        color: #64736b;
+        background: #f3f6f4;
+        border: 1px solid #d6e2dd;
+    }
+
+    .laporan-pembelian-modal .laporan-close-button:hover {
+        color: #dc2626;
+        background: #fff5f5;
+        border-color: #fecaca;
+        transform: translateY(-1px);
+    }
+
+    .laporan-pembelian-modal .laporan-page-actions button:active {
+        transform: translateY(0);
+    }
+
+    .laporan-pembelian-modal .laporan-page-actions button:focus-visible {
+        outline: 3px solid rgba(16, 185, 129, 0.22);
+        outline-offset: 3px;
+    }
+
+ /* ======================================
+   FILTER FORM
+====================================== */
+
+.laporan-pembelian-modal .laporan-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 22px;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 20px;
+}
+
+.laporan-pembelian-modal .laporan-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.laporan-pembelian-modal .laporan-form-group label {
+    display: flex;
+    align-items: center;
+    min-height: 18px;
+    margin: 0;
+    color: #35463e;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+/* INPUT SUPPLIER */
+
+.laporan-pembelian-modal .laporan-form-group select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    margin: 0;
+    padding: 0 13px;
+    color: #17221e;
+    background: #ffffff;
+    border: 1px solid #d6e2dd;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.laporan-pembelian-modal .laporan-form-group select:hover {
+    border-color: #a9c7b8;
+}
+
+.laporan-pembelian-modal .laporan-form-group select:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+/* ======================================
+   TANGGAL + TOMBOL RESET
+====================================== */
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #d6e2dd;
+    border-radius: 10px;
+    background: #ffffff;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper:hover {
+    border-color: #a9c7b8;
+}
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper:focus-within {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+/* INPUT TANGGAL */
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper input[type="date"] {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0 10px 0 13px;
+    color: #17221e;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper input[type="date"]:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* TOMBOL RESET */
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper .laporan-reset-button {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    min-width: 0;
+    margin: 0 6px 0 0;
+    padding: 0 10px;
+    color: #bb1414;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper .laporan-reset-button:hover {
+    background: #d1fae5;
+    border-color: #6ee7b7;
+}
+
+.laporan-pembelian-modal .laporan-tanggal-wrapper .laporan-reset-button:active {
+    transform: scale(0.96);
+}
+
+
+
+    /* ======================================
+       SUMMARY GRID
+    ====================================== */
+
+    .laporan-pembelian-modal .laporan-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 14px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .laporan-pembelian-modal .laporan-summary-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+        min-height: 94px;
+        padding: 16px;
+        background: linear-gradient(
+            145deg,
+            #ffffff,
+            #bbf8d05d
+        );
+        border: 1px solid #dce9e2;
+        border-radius: 12px;
+        box-shadow: 0 3px 9px rgba(23, 34, 30, 0.025);
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    .laporan-pembelian-modal .laporan-summary-item::before {
+        position: absolute;
+        top: 12px;
+        bottom: 12px;
+        left: 0;
+        width: 3px;
+        background: #10b981;
+        border-radius: 0 4px 4px 0;
+        content: "";
+    }
+
+    .laporan-pembelian-modal .laporan-summary-item span {
+        color: #68766f;
+        font-size: 12px;
+        font-weight: 650;
+        line-height: 1.5;
+    }
+
+    .laporan-pembelian-modal .laporan-summary-item strong {
+        color: #17221e;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.35;
+        letter-spacing: -0.3px;
+        font-variant-numeric: tabular-nums;
+        overflow-wrap: anywhere;
+    }
+
+    .laporan-pembelian-modal #laporanPembelianTotal {
+        color: #0a25bc;
+    }
+
+    .laporan-pembelian-modal #laporanPembelianCash {
+        color: #047857;
+    }
+
+    .laporan-pembelian-modal #laporanPembelianQRIS {
+        color: #0f766e;
+    }
+
+    .laporan-pembelian-modal #laporanPembelianKartu {
+        color: #0f766e;
+    }
+
+    .laporan-pembelian-modal #laporanPembelianTransfer {
+        color: #0f766e;
+    }
+
+    .laporan-pembelian-modal #laporanPembelianTotalPayment {
+        color: #0a25bc;
+    }
+
+    /* ======================================
+       TRANSACTION COUNT
+    ====================================== */
+
+    .laporan-pembelian-modal #laporanPembelianCount {
+        flex-shrink: 0;
+        padding: 6px 11px;
+        color: #047857;
+        background: #ecfdf5;
+        border: 1px solid #ccefe0;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    /* ======================================
+       TABLE WRAPPER
+    ====================================== */
+
+    .laporan-pembelian-modal .laporan-table-wrapper {
+        width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: visible;
+        border: 1px solid #dce7e1;
+        border-radius: 11px;
+        scrollbar-width: thin;
+        scrollbar-color: #b8cec2 #edf3ef;
+    }
+
+    .laporan-pembelian-modal .laporan-table-wrapper::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .laporan-pembelian-modal .laporan-table-wrapper::-webkit-scrollbar-track {
+        background: #edf3ef;
+    }
+
+    .laporan-pembelian-modal .laporan-table-wrapper::-webkit-scrollbar-thumb {
+        background: #b8cec2;
+        border: 2px solid #edf3ef;
+        border-radius: 8px;
+    }
+
+    /* ======================================
+       TRANSACTION TABLE
+    ====================================== */
+
+    .laporan-pembelian-modal .laporan-table {
+        width: 100%;
+        min-width: 1000px;
+        border-collapse: separate;
+        border-spacing: 0;
+        color: #17221e;
+        background: linear-gradient(
+            145deg,
+            #ffffff,
+            #bbf8d05d
+        );
+        font-size: 13px;
+    }
+
+    .laporan-pembelian-modal .laporan-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        padding: 14px 13px;
+        color: #52635a;
+        background: #f0f6f3;
+        border-bottom: 1px solid #d6e2dd;
+        text-align: left;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody td {
+        padding: 13px;
+        color: #35463e;
+        background: #ffffff;
+        border-bottom: 1px solid #e8efeb;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody tr:hover td {
+        background: #f6fbf8;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody td:nth-child(1) {
+        color: #68766f;
+        text-align: center;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody td:nth-child(5),
+    .laporan-pembelian-modal .laporan-table tbody td:nth-child(6),
+    .laporan-pembelian-modal .laporan-table tbody td:nth-child(7) {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody td:nth-child(7) {
+        color: #047857;
+        font-weight: 700;
+    }
+
+    /* ======================================
+       TABLE ACTION BUTTONS
+    ====================================== */
+
+    .laporan-pembelian-modal .laporan-table tbody button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+        padding: 0 11px;
+        color: #047857;
+        background: #ecfdf5;
+        border: 1px solid #ccefe0;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        cursor: pointer;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .laporan-pembelian-modal .laporan-table tbody button:hover {
+        color: #ffffff;
+        background: #059669;
+        border-color: #059669;
+    }
+
+    /* ======================================
+       MEDIUM DESKTOP
+    ====================================== */
+
+    @media (min-width: 769px) and (max-width: 1100px) {
+
+        .laporan-pembelian-modal {
+            padding: 16px;
+        }
+
+        .laporan-pembelian-modal-container {
+            border-radius: 16px;
+        }
+
+        .laporan-page-header {
+            padding: 20px 22px;
+        }
+
+        .laporan-pembelian-modal-body {
+            padding: 20px 22px 24px;
+        }
+
+        .laporan-pembelian-modal .laporan-card {
+            padding: 18px;
+        }
+
+        .laporan-pembelian-modal .laporan-summary-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .laporan-pembelian-modal .laporan-summary-item strong {
+            font-size: 17px;
+        }
+
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .laporan-pembelian-modal button,
+        .laporan-pembelian-modal input,
+        .laporan-pembelian-modal select {
+            transition: none;
+        }
+
+    }
+
+}

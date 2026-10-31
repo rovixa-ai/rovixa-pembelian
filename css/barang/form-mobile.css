@@ -1,0 +1,321 @@
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN BARANG FORM
+   MOBILE CSS
+   FILE: pembelian-barang-form-mobile.css
+====================================== */
+
+@media (max-width: 768px) {
+
+    .barang-page {
+        width: 100%;
+        min-width: 0;
+        padding: 16px 12px 28px;
+        color: #17221e;
+        background:
+            radial-gradient(
+                circle at 100% 0%,
+                rgba(16, 185, 129, 0.07),
+                transparent 30%
+            ),
+            #f8fbfa;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    /* ======================================
+       HEADER
+    ====================================== */
+
+    .barang-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .barang-header h2 {
+        margin: 0;
+        color: #17221e;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.35;
+        letter-spacing: -0.4px;
+    }
+
+    .barang-header p {
+        margin: 6px 0 0;
+        color: #68766f;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* ======================================
+       FORM CARD
+    ====================================== */
+
+    .barang-form-card {
+        width: 100%;
+        min-width: 0;
+        padding: 18px 14px;
+        background: linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f8fbfa 100%
+        );
+        border: 1px solid #d6e2dd;
+        border-radius: 15px;
+        box-shadow:
+            0 2px 5px rgba(23, 34, 30, 0.025),
+            0 8px 22px rgba(23, 34, 30, 0.045);
+        box-sizing: border-box;
+    }
+
+    .barang-form-card h3 {
+        position: relative;
+        margin: 0;
+        padding-left: 11px;
+        color: #17221e;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .barang-form-card h3::before {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        left: 0;
+        width: 4px;
+        background: linear-gradient(
+            180deg,
+            #34d399,
+            #059669
+        );
+        border-radius: 4px;
+        content: "";
+    }
+
+    .barang-form-card h3 + p {
+        margin: 6px 0 0;
+        color: #68766f;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* ======================================
+       FORM GRID
+    ====================================== */
+
+    .barang-form-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        width: 100%;
+        min-width: 0;
+        margin-top: 18px;
+    }
+
+    .barang-field {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        gap: 7px;
+    }
+
+    .barang-field label {
+        color: #35463e;
+        font-size: 13px;
+        font-weight: 650;
+        line-height: 1.4;
+    }
+
+    .barang-field input,
+    .barang-field select {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        height: 44px;
+        padding: 0 12px;
+        color: #17221e;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+        border-radius: 10px;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 14px;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .barang-field input::placeholder {
+        color: #9aa8a1;
+        opacity: 1;
+    }
+
+    .barang-field input:focus,
+    .barang-field select:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    .barang-field input[readonly] {
+        color: #68766f;
+        background: #f0f5f2;
+        border-color: #dce7e1;
+    }
+
+    .barang-field input[readonly]:focus {
+        border-color: #dce7e1;
+        box-shadow: none;
+    }
+
+    .barang-field input[type="number"] {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .barang-field select {
+        cursor: pointer;
+    }
+
+    /* ======================================
+       SECTION SATUAN PEMBELIAN
+    ====================================== */
+
+    .barang-form-card > div[style*="margin-top"] {
+        margin-top: 24px !important;
+        padding-top: 20px;
+        border-top: 1px solid #e5ede8;
+    }
+
+    /* ======================================
+       ACTION BUTTONS
+    ====================================== */
+
+    .barang-form-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 10px;
+        margin-top: 24px;
+        padding-top: 18px;
+        border-top: 1px solid #e5ede8;
+    }
+
+    .barang-form-actions button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        padding: 0 12px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .barang-form-actions .btn-secondary {
+        color: #405149;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+    }
+
+    .barang-form-actions .btn-secondary:active {
+        background: #f0f5f2;
+    }
+
+    .barang-form-actions .btn-primary {
+        color: #ffffff;
+        background: linear-gradient(
+            135deg,
+            #10b981,
+            #059669
+        );
+        border: 1px solid #059669;
+        box-shadow: 0 4px 10px rgba(5, 150, 105, 0.16);
+    }
+
+    .barang-form-actions .btn-primary:active {
+        background: #047857;
+        transform: scale(0.98);
+    }
+
+    .barang-form-actions button:focus-visible {
+        outline: 3px solid rgba(16, 185, 129, 0.25);
+        outline-offset: 2px;
+    }
+
+    .barang-form-actions button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* ======================================
+       SMALL PHONE
+    ====================================== */
+
+    @media (max-width: 360px) {
+
+        .barang-page {
+            padding: 12px 9px 24px;
+        }
+
+        .barang-header h2 {
+            font-size: 20px;
+        }
+
+        .barang-form-card {
+            padding: 16px 11px;
+            border-radius: 13px;
+        }
+
+        .barang-form-grid {
+            gap: 14px;
+        }
+
+        .barang-field input,
+        .barang-field select {
+            height: 42px;
+            padding: 0 10px;
+            font-size: 13px;
+        }
+
+        .barang-form-actions {
+            gap: 8px;
+        }
+
+        .barang-form-actions button {
+            padding: 0 8px;
+            font-size: 13px;
+        }
+
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .barang-field input,
+        .barang-field select,
+        .barang-form-actions button {
+            transition: none;
+        }
+
+    }
+
+}

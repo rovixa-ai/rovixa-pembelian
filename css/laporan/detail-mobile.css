@@ -1,0 +1,371 @@
+/* ======================================
+   TREEHOUSE POS
+   LAPORAN PEMBELIAN
+   DETAIL MOBILE CSS
+   FILE: laporan-pembelian-detail-mobile.css
+====================================== */
+
+@media (max-width: 768px) {
+
+    #laporanPembelianDetailModal {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        overflow: hidden;
+        font-family: inherit;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #laporanPembelianDetailModal,
+    #laporanPembelianDetailModal * {
+        box-sizing: border-box;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.65);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-dialog {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        max-height: 100dvh;
+        min-width: 0;
+        margin: 0;
+        overflow: hidden;
+        background: #f8fafc;
+        color: #1e293b;
+    }
+
+    /* HEADER */
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-header {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-shrink: 0;
+        padding: 15px 16px;
+        background: #15803d;
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-header h3 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: #ffffff;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-header p {
+        margin: 4px 0 0;
+        font-size: 12px;
+        line-height: 1.4;
+        color: rgba(255, 255, 255, 0.85);
+        overflow-wrap: anywhere;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 27px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-close:active {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* CONTENT INFO */
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        flex-shrink: 0;
+        padding: 14px;
+        overflow: visible;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        min-width: 0;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: #f8fafc;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info > div span {
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.35;
+        color: #64748b;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info > div strong {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.45;
+        color: #1e293b;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    /* SCROLLABLE CONTENT
+       Info tetap di atas.
+       Bagian tabel dan total dapat digulir.
+    */
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-section {
+        display: block;
+        flex: 0 0 auto;
+        min-width: 0;
+        margin: 0;
+        padding: 14px 12px 0;
+        background: #ffffff;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info
+    + .laporan-pembelian-detail-section {
+        overflow: visible;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-section-title {
+        margin: 0 0 10px;
+        color: #0f172a;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    /* TABLE */
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table-wrapper {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 9px;
+        background: #ffffff;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table {
+        width: 100%;
+        min-width: 690px;
+        margin: 0;
+        border: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #ffffff;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table th {
+        padding: 11px 10px;
+        border: 0;
+        border-bottom: 1px solid #d1d5db;
+        background: #f1f5f9;
+        color: #334155;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table td {
+        padding: 11px 10px;
+        border: 0;
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table tbody tr:nth-child(even) {
+        background: #f8fafc;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-table td strong {
+        color: #0f172a;
+        font-weight: 700;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-empty {
+        padding: 22px 12px !important;
+        color: #64748b !important;
+        text-align: center;
+        white-space: normal !important;
+    }
+
+    /* TOTAL */
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        flex-shrink: 0;
+        margin: 12px;
+        padding: 5px 12px;
+        border: 1px solid #dbeafe;
+        border-radius: 10px;
+        background: #eff6ff;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #dbeafe;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total > div:last-child {
+        border-bottom: 0;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total span {
+        color: #475569;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total strong {
+        color: #1e293b;
+        font-size: 13px;
+        font-weight: 700;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total > div:last-child span,
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total > div:last-child strong {
+        color: #166534;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* FOOTER */
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-footer {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-shrink: 0;
+        gap: 10px;
+        margin-top: auto;
+        padding: 12px 16px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        border-top: 1px solid #e2e8f0;
+        background: #ffffff;
+        box-shadow: 0 -3px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-footer button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+        padding: 11px 16px;
+        border: 0;
+        border-radius: 9px;
+        background: #15803d;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-footer button:active {
+        background: #166534;
+    }
+
+}
+
+/* ======================================
+   MOBILE KECIL
+====================================== */
+
+@media (max-width: 380px) {
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-header {
+        padding: 12px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-header h3 {
+        font-size: 16px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info {
+        gap: 7px;
+        padding: 10px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info > div {
+        padding: 8px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-info > div strong {
+        font-size: 11px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-section {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-total {
+        margin: 10px;
+    }
+
+    #laporanPembelianDetailModal .laporan-pembelian-detail-footer {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+}

@@ -1,0 +1,513 @@
+/* ======================================
+   TREEHOUSE POS
+   APP DESKTOP RENDER
+   DESKTOP CSS
+====================================== */
+
+@media (min-width: 769px) {
+
+    :root {
+        --app-bg: #f4f8f6;
+        --app-surface: #ffffff;
+        --app-surface-soft: #f8fbfa;
+
+        --app-text: #17221e;
+        --app-text-secondary: #68766f;
+
+        --app-emerald: #10b981;
+        --app-emerald-dark: #059669;
+        --app-emerald-light: #34d399;
+
+        --app-border: #d6e2dd;
+
+        --app-shadow:
+            0 12px 28px rgba(15, 23, 42, 0.055),
+            0 2px 5px rgba(15, 23, 42, 0.035);
+
+        --app-shadow-hover:
+            0 18px 36px rgba(15, 23, 42, 0.075),
+            0 4px 10px rgba(16, 185, 129, 0.06);
+
+        --app-radius: 16px;
+    }
+
+    /* ======================================
+       APP BACKGROUND
+    ====================================== */
+
+    html {
+        min-height: 100%;
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--app-bg);
+        color: var(--app-text);
+        font-family:
+            Inter,
+            "Segoe UI",
+            Arial,
+            sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    #app {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
+
+        margin: 0;
+        padding: 0;
+
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       HIDE SIDEBAR
+    ====================================== */
+
+    #sidebar,
+    #sidebar-content,
+    #mobileMenu {
+        display: none !important;
+    }
+
+    /* ======================================
+       MAIN LAYOUT
+    ====================================== */
+
+    #main {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+
+        margin: 0;
+        padding: 0;
+
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       HEADER
+    ====================================== */
+
+    #header {
+        position: sticky;
+        top: 0;
+
+        z-index: 900;
+
+        flex: 0 0 auto;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 76px;
+
+        margin: 0;
+        padding: 0;
+
+        box-sizing: border-box;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        border-bottom: 1px solid rgba(214, 226, 221, 0.85);
+
+        box-shadow:
+            0 4px 18px rgba(15, 23, 42, 0.025);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+
+    #header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 28px;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 76px;
+
+        margin: 0;
+        padding: 12px 30px;
+
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       STORE LOGO AND NAME
+    ====================================== */
+
+    .header-store {
+        display: flex;
+        align-items: center;
+
+        flex: 0 1 auto;
+        gap: 12px;
+
+        min-width: 0;
+        max-width: 35%;
+    }
+
+    .header-store-logo {
+        display: block;
+
+        flex: 0 0 auto;
+
+        width: 44px;
+        height: 44px;
+
+        object-fit: contain;
+
+        padding: 4px;
+
+        box-sizing: border-box;
+
+        border: 1px solid var(--app-border);
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #ffffff 0%,
+                #f8fbfa 100%
+            );
+
+        box-shadow:
+            0 4px 12px rgba(5, 150, 105, 0.07);
+    }
+
+    .header-store-name {
+        min-width: 0;
+
+        color: rgb(6, 99, 68);
+
+        font-size: 17px;
+        font-weight: 700;
+
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+
+        overflow-wrap: anywhere;
+    }
+
+    /* ======================================
+       HEADER TITLE
+    ====================================== */
+
+    .header-title {
+        display: flex;
+        align-items: center;
+
+        flex: 1 1 auto;
+
+        min-width: 0;
+    }
+
+    .header-title-text {
+        display: flex;
+        flex-direction: column;
+
+        gap: 4px;
+
+        min-width: 0;
+    }
+
+    .header-title-text h1 {
+        margin: 0;
+
+        color: rgb(6, 99, 68);
+
+        font-size: 22px;
+        font-weight: 700;
+
+        line-height: 1.25;
+        letter-spacing: -0.045em;
+    }
+
+    .header-title-text #header-subtitle {
+        display: block;
+
+        color: var(--app-text-secondary);
+
+        font-size: 12px;
+        font-weight: 500;
+
+        line-height: 1.5;
+    }
+
+    /* ======================================
+       HEADER ACTIONS
+    ====================================== */
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        flex: 0 0 auto;
+        gap: 12px;
+
+        min-width: 0;
+    }
+
+    .header-report-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 40px;
+
+        padding: 0 17px;
+
+        border: 1px solid rgba(16, 185, 129, 0.24);
+        border-radius: 11px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #10b981 0%,
+                #059669 100%
+            );
+
+        color: #ffffff;
+
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 700;
+
+        white-space: nowrap;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 5px 13px rgba(5, 150, 105, 0.14);
+
+        transition:
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .header-report-button:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #059669 0%,
+                #047857 100%
+            );
+
+        box-shadow:
+            0 7px 17px rgba(5, 150, 105, 0.2);
+
+        transform: translateY(-1px);
+    }
+
+    .header-report-button:focus-visible {
+        outline: 2px solid var(--app-emerald);
+        outline-offset: 3px;
+    }
+
+    /* ======================================
+       HEADER ADMIN
+    ====================================== */
+
+    .header-admin {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 auto;
+
+        min-height: 38px;
+
+        padding: 0 16px 0 32px;
+
+        border: 1px solid rgba(16, 185, 129, 0.18);
+        border-radius: 999px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #ffffff 0%,
+                #f1fbf6 100%
+            );
+
+        color: var(--app-emerald-dark);
+
+        font-size: 12px;
+        font-weight: 700;
+
+        box-shadow:
+            0 4px 12px rgba(5, 150, 105, 0.045);
+
+        white-space: nowrap;
+    }
+
+    .header-admin::before {
+        content: "";
+
+        position: absolute;
+        left: 13px;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--app-emerald);
+
+        box-shadow:
+            0 0 0 4px rgba(16, 185, 129, 0.09);
+    }
+
+    /* ======================================
+       HEADER LOGOUT
+       POSISI SETELAH ADMIN
+    ====================================== */
+
+    .header-logout-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 auto;
+        gap: 8px;
+
+        min-height: 40px;
+        padding: 0 15px;
+
+        border: 1px solid rgba(220, 38, 38, 0.18);
+        border-radius: 11px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #ffffff 0%,
+                #fff5f5 100%
+            );
+
+        color: #dc2626;
+
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 700;
+
+        white-space: nowrap;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 4px 12px rgba(220, 38, 38, 0.055);
+
+        transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .header-logout-button:hover {
+        border-color: rgba(220, 38, 38, 0.35);
+
+        background:
+            linear-gradient(
+                145deg,
+                #fff5f5 0%,
+                #fee2e2 100%
+            );
+
+        box-shadow:
+            0 7px 17px rgba(220, 38, 38, 0.11);
+
+        transform: translateY(-1px);
+    }
+
+    .header-logout-button:active {
+        transform: translateY(0);
+    }
+
+    .header-logout-button:focus-visible {
+        outline: 2px solid #ef4444;
+        outline-offset: 3px;
+    }
+
+    .header-logout-icon {
+        display: block;
+
+        flex: 0 0 auto;
+
+        width: 17px;
+        height: 17px;
+
+        object-fit: contain;
+    }
+
+    .header-logout-text {
+        display: inline-block;
+
+        line-height: 1;
+    }
+
+    /* ======================================
+       PAGE CONTENT
+    ====================================== */
+
+    #page {
+        display: block;
+
+        flex: 1 0 auto;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+
+        margin: 0;
+        padding: 24px 30px;
+
+        box-sizing: border-box;
+    }
+
+    #page > * {
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       COMPATIBILITY
+    ====================================== */
+
+    #main-content,
+    #page-content,
+    #content {
+        width: 100%;
+        margin-left: 0;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+        .header-report-button,
+        .header-logout-button {
+            transition: none;
+        }
+    }
+
+}

@@ -1,0 +1,366 @@
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN ITEM
+   MOBILE CSS
+   FILE: pembelian-item-mobile.css
+====================================== */
+
+@media (max-width: 768px) {
+
+    /* ======================================
+       ITEM LIST CONTAINER
+    ====================================== */
+
+    #pembelian-mobile-items {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       ITEM CARD
+    ====================================== */
+
+    .pembelian-mobile-item {
+        width: 100%;
+        min-width: 0;
+        padding: 15px;
+        background: linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f8fbfa 100%
+        );
+        border: 1px solid #d6e2dd;
+        border-radius: 15px;
+        box-shadow:
+            0 2px 5px rgba(23, 34, 30, 0.025),
+            0 8px 20px rgba(23, 34, 30, 0.045);
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* ======================================
+       ITEM HEADER
+    ====================================== */
+
+    .pembelian-mobile-item-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5ede8;
+    }
+
+    .pembelian-mobile-item-title {
+        flex: 1;
+        min-width: 0;
+        color: #17221e;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    .pembelian-mobile-item-remove {
+        display: inline-flex;
+        flex: 0 0 34px;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        margin-top: -3px;
+        padding: 0;
+        color: #dc2626;
+        background: #fff5f5;
+        border: 1px solid #fee2e2;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .pembelian-mobile-item-remove:active {
+        color: #ffffff;
+        background: #dc2626;
+        border-color: #dc2626;
+        transform: scale(0.95);
+    }
+
+    .pembelian-mobile-item-remove:focus-visible {
+        outline: 3px solid rgba(220, 38, 38, 0.18);
+        outline-offset: 2px;
+    }
+
+    /* ======================================
+       ITEM FIELDS
+    ====================================== */
+
+    .pembelian-mobile-item-field {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 14px;
+        box-sizing: border-box;
+    }
+
+    .pembelian-mobile-item-field label {
+        color: #52635a;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .pembelian-mobile-item-field input,
+    .pembelian-mobile-item-field select {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        height: 43px;
+        padding: 0 11px;
+        color: #17221e;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+        border-radius: 9px;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 14px;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .pembelian-mobile-item-field input::placeholder {
+        color: #9aa8a1;
+        opacity: 1;
+    }
+
+    .pembelian-mobile-item-field input:hover,
+    .pembelian-mobile-item-field select:hover {
+        border-color: #a9c7b8;
+    }
+
+    .pembelian-mobile-item-field input:focus,
+    .pembelian-mobile-item-field select:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    .pembelian-mobile-item-field input[type="number"] {
+        font-variant-numeric: tabular-nums;
+    }
+
+        /* ======================================
+       BARCODE INPUT + CAMERA BUTTON
+    ====================================== */
+
+    .pembelian-massal-mobile-barcode-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .pembelian-massal-mobile-barcode-wrapper input {
+        width: 100%;
+        min-width: 0;
+        padding-right: 48px;
+    }
+
+    .pembelian-massal-mobile-barcode-camera {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 34px;
+
+        width: 34px;
+        height: 34px;
+        margin: 0;
+        padding: 7px;
+
+        border: 0px solid #ccefe0;
+        border-radius: 8px;
+        background: transparent;
+
+        box-shadow:
+            0 1px 3px rgba(15, 23, 42, 0.05);
+
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .pembelian-massal-mobile-barcode-camera img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+    .pembelian-massal-mobile-barcode-camera:hover {
+        background: #d1fae5;
+        border-color: #10b981;
+        box-shadow:
+            0 2px 6px rgba(16, 185, 129, 0.12);
+    }
+
+    .pembelian-massal-mobile-barcode-camera:active {
+        transform: translateY(-50%) scale(0.93);
+        background: #d1fae5;
+    }
+
+    .pembelian-massal-mobile-barcode-camera:focus-visible {
+        outline: 2px solid #10b981;
+        outline-offset: 2px;
+    }
+
+    /* ======================================
+       QTY, HARGA, DISKON GRID
+    ====================================== */
+
+    .pembelian-mobile-item-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+        margin-top: 2px;
+        box-sizing: border-box;
+    }
+
+    .pembelian-mobile-item-grid .pembelian-mobile-item-field {
+        min-width: 0;
+        margin-bottom: 14px;
+    }
+
+    .pembelian-mobile-item-grid .pembelian-mobile-item-field input {
+        padding: 0 8px;
+        font-size: 13px;
+    }
+
+    /* ======================================
+       ITEM TOTAL
+    ====================================== */
+
+    .pembelian-mobile-item-total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+        margin-top: 2px;
+        padding: 13px 12px;
+        background: linear-gradient(
+            135deg,
+            #ecfdf5,
+            #f0fdf4
+        );
+        border: 1px solid #ccefe0;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+    .pembelian-mobile-item-total span {
+        color: #52635a;
+        font-size: 12px;
+        font-weight: 650;
+    }
+
+    .pembelian-mobile-item-total strong {
+        min-width: 0;
+        color: #047857;
+        font-size: 15px;
+        font-weight: 700;
+        text-align: right;
+        overflow-wrap: anywhere;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* ======================================
+       SMALL PHONE
+    ====================================== */
+
+    @media (max-width: 360px) {
+
+        #pembelian-mobile-items {
+            gap: 11px;
+        }
+
+        .pembelian-mobile-item {
+            padding: 12px;
+            border-radius: 13px;
+        }
+
+        .pembelian-mobile-item-title {
+            font-size: 14px;
+        }
+
+        .pembelian-mobile-item-grid {
+            gap: 7px;
+        }
+
+        .pembelian-mobile-item-field input,
+        .pembelian-mobile-item-field select {
+            height: 41px;
+            padding: 0 9px;
+            font-size: 13px;
+        }
+
+        .pembelian-mobile-item-grid .pembelian-mobile-item-field input {
+            padding: 0 6px;
+            font-size: 12px;
+        }
+
+        .pembelian-mobile-item-total {
+            padding: 11px 9px;
+        }
+
+        .pembelian-mobile-item-total strong {
+            font-size: 14px;
+        }
+
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .pembelian-mobile-item-field input,
+        .pembelian-mobile-item-field select,
+        .pembelian-mobile-item-remove {
+            transition: none;
+        }
+
+    }
+
+}

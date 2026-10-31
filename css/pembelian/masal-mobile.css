@@ -1,0 +1,1146 @@
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN MASSAL
+   MOBILE PAGE STYLE
+   FILE: masal-mobile.css
+====================================== */
+
+.pembelian-massal-mobile-page {
+    --massal-mobile-primary: #10b981;
+    --massal-mobile-primary-dark: #059669;
+    --massal-mobile-text: #17221e;
+    --massal-mobile-muted: #68766f;
+    --massal-mobile-border: #d6e2dd;
+    --massal-mobile-surface: #ffffff;
+    --massal-mobile-background: #f3f7f5;
+    --massal-mobile-danger: #dc2626;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 100dvh;
+
+    color: var(--massal-mobile-text);
+    background: var(--massal-mobile-background);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.pembelian-massal-mobile-page *,
+.pembelian-massal-mobile-page *::before,
+.pembelian-massal-mobile-page *::after {
+    box-sizing: border-box;
+}
+
+/* ======================================
+   CONTAINER
+====================================== */
+
+.pembelian-massal-mobile-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    background: var(--massal-mobile-background);
+}
+
+/* ======================================
+   HEADER
+====================================== */
+
+.pembelian-massal-mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-height: 68px;
+
+    padding: 14px 16px;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff 0%,
+        #f8fbfa 100%
+    );
+
+    border-top: 3px solid var(--massal-mobile-primary);
+    border-bottom: 1px solid var(--massal-mobile-border);
+
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.pembelian-massal-mobile-header-info {
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-header-info h2 {
+    margin: 0;
+
+    color: #107941;
+
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.35px;
+}
+
+.pembelian-massal-mobile-header-info p {
+    margin: 4px 0 0;
+
+    color: var(--massal-mobile-muted);
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* ======================================
+   BODY
+====================================== */
+
+.pembelian-massal-mobile-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px 12px 180px;
+}
+
+/* ======================================
+   SECTION
+====================================== */
+
+.pembelian-massal-mobile-info,
+.pembelian-massal-mobile-items-section,
+.pembelian-massal-mobile-payment-section {
+    width: 100%;
+    min-width: 0;
+
+    padding: 15px;
+
+    background: var(--massal-mobile-surface);
+
+    border: 1px solid var(--massal-mobile-border);
+    border-radius: 16px;
+
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+.pembelian-massal-mobile-items-section {
+    padding: 15px 12px;
+}
+
+.pembelian-massal-mobile-payment-section {
+    padding: 15px;
+}
+
+/* ======================================
+   SECTION HEADING
+====================================== */
+
+.pembelian-massal-mobile-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    min-width: 0;
+    margin-bottom: 14px;
+}
+
+.pembelian-massal-mobile-section-heading h3 {
+    margin: 0;
+
+    color: rgb(9, 109, 79);
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.pembelian-massal-mobile-section-heading p {
+    margin: 4px 0 0;
+
+    color: var(--massal-mobile-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.pembelian-massal-mobile-items-section
+.pembelian-massal-mobile-section-heading {
+    padding: 0 3px;
+}
+
+/* ======================================
+   FORM GRID
+====================================== */
+
+.pembelian-massal-mobile-info-grid,
+.pembelian-massal-mobile-payment-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* ======================================
+   FORM FIELD
+====================================== */
+
+.pembelian-massal-mobile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-field label {
+    color: #46554d;
+
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.pembelian-massal-mobile-field input,
+.pembelian-massal-mobile-field select {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    margin: 0;
+    padding: 10px 12px;
+
+    color: var(--massal-mobile-text);
+    background: #ffffff;
+
+    border: 1px solid var(--massal-mobile-border);
+    border-radius: 10px;
+
+    outline: none;
+
+    font: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.pembelian-massal-mobile-field input:focus,
+.pembelian-massal-mobile-field select:focus {
+    border-color: var(--massal-mobile-primary);
+
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.pembelian-massal-mobile-field input::placeholder {
+    color: #a0aaa4;
+}
+
+/* ======================================
+   ADD ITEM BUTTON
+====================================== */
+
+.pembelian-massal-mobile-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    flex-shrink: 0;
+    min-height: 36px;
+
+    padding: 8px 12px;
+
+    color: #ffffff;
+    background: var(--massal-mobile-primary-dark);
+
+    border: 0;
+    border-radius: 9px;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pembelian-massal-mobile-add-button span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.pembelian-massal-mobile-add-button:active {
+    transform: scale(0.97);
+}
+
+/* ======================================
+   TABLE
+   KOMPATIBILITAS RENDER
+====================================== */
+
+.pembelian-massal-mobile-table-wrapper {
+    display: none;
+
+    width: 100%;
+    overflow-x: auto;
+}
+
+.pembelian-massal-mobile-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* ======================================
+   MOBILE ITEM LIST
+====================================== */
+
+.pembelian-massal-mobile-items,
+.pembelian-massal-mobile-page #massal-mobile-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+
+    visibility: visible;
+    opacity: 1;
+}
+
+.pembelian-massal-mobile-items > *,
+.pembelian-massal-mobile-page #massal-mobile-items > * {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.pembelian-massal-mobile-items input,
+.pembelian-massal-mobile-items select,
+.pembelian-massal-mobile-page #massal-mobile-items input,
+.pembelian-massal-mobile-page #massal-mobile-items select {
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* ======================================
+   MOBILE ITEM CARD
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 13px;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff 0%,
+        #f8fbfa 100%
+    );
+
+    border: 1px solid var(--massal-mobile-border);
+    border-radius: 13px;
+
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.035);
+}
+
+/* ======================================
+   ITEM CARD HEADER
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding-bottom: 10px;
+    margin-bottom: 3px;
+
+    border-bottom: 1px solid #e5eeea;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card-header strong {
+    color: blue;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card-header button {
+    flex-shrink: 0;
+    min-height: 32px;
+
+    padding: 6px 10px;
+
+    color: var(--massal-mobile-danger);
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 650;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ======================================
+   ITEM CARD LABEL
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card label {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #526158;
+
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+/* ======================================
+   ITEM CARD INPUT
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card input,
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card select {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 41px;
+
+    margin: 0;
+    padding: 9px 10px;
+
+    color: var(--massal-mobile-text);
+    background: #ffffff;
+
+    border: 1px solid var(--massal-mobile-border);
+    border-radius: 9px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card input:focus,
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card select:focus {
+    border-color: var(--massal-mobile-primary);
+
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.11);
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-card input[readonly] {
+    color: var(--massal-mobile-muted);
+    background: #f1f5f3;
+}
+
+/* ======================================
+   KODE BARANG + BARCODE + SATUAN
+   SATU BARIS
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-identity-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 0.8fr)
+        minmax(0, 1.45fr)
+        minmax(0, 0.7fr);
+    gap: 7px;
+
+    width: 100%;
+    min-width: 0;
+    margin: 2px 0 5px;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-identity-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-identity-grid label {
+    margin: 0;
+
+    font-size: 10px;
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-identity-grid input,
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-identity-grid select {
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+
+    padding: 7px 5px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    text-overflow: ellipsis;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-identity-grid input[readonly] {
+    padding-right: 3px;
+    padding-left: 3px;
+
+    font-size: 10px;
+    text-align: center;
+}
+
+/* ======================================
+   ITEM CARD GRID
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 0;
+}
+
+/* ======================================
+   ITEM CARD TOTAL
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-top: 5px;
+    padding: 12px;
+
+    background: #ecfdf5;
+
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-total span {
+    color: #526158;
+
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-total strong {
+    color: #047857;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+/* ======================================
+   PAYMENT ACTION
+====================================== */
+
+.pembelian-massal-mobile-payment-action {
+    display: flex;
+    justify-content: stretch;
+
+    width: 100%;
+}
+
+.pembelian-massal-mobile-fill-button {
+    width: 100%;
+    min-height: 42px;
+
+    padding: 10px 12px;
+
+    color: var(--massal-mobile-primary-dark);
+    background: #ecfdf5;
+
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pembelian-massal-mobile-fill-button:active {
+    background: #d1fae5;
+}
+
+/* ======================================
+   FIXED FOOTER
+====================================== */
+
+.pembelian-massal-mobile-footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    width: 100%;
+
+    padding: 14px 14px calc(14px + env(safe-area-inset-bottom));
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-top: 1px solid var(--massal-mobile-border);
+
+    box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.07);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* ======================================
+   FOOTER SUMMARY
+====================================== */
+
+.pembelian-massal-mobile-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-summary span {
+    color: var(--massal-mobile-muted);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pembelian-massal-mobile-summary strong {
+    color: var(--massal-mobile-primary-dark);
+
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+
+    overflow-wrap: anywhere;
+    text-align: right;
+}
+
+/* ======================================
+   FOOTER BUTTONS
+====================================== */
+
+.pembelian-massal-mobile-footer-actions {
+    display: grid;
+    grid-template-columns: minmax(95px, 0.8fr) minmax(0, 1.6fr);
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-reset-button,
+.pembelian-massal-mobile-save-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    padding: 10px 12px;
+
+    border-radius: 11px;
+
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+.pembelian-massal-mobile-reset-button {
+    color: #526158;
+    background: #ffffff;
+
+    border: 1px solid var(--massal-mobile-border);
+}
+
+.pembelian-massal-mobile-save-button {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        var(--massal-mobile-primary),
+        var(--massal-mobile-primary-dark)
+    );
+
+    border: 1px solid var(--massal-mobile-primary-dark);
+
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.16);
+}
+
+.pembelian-massal-mobile-reset-button:active,
+.pembelian-massal-mobile-save-button:active {
+    transform: scale(0.98);
+}
+
+.pembelian-massal-mobile-save-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ======================================
+   TABLET / MOBILE LEBAR
+====================================== */
+
+@media (min-width: 480px) {
+
+    .pembelian-massal-mobile-body {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .pembelian-massal-mobile-info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pembelian-massal-mobile-info-grid
+    .pembelian-massal-mobile-field:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .pembelian-massal-mobile-payment-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pembelian-massal-mobile-payment-action {
+        grid-column: 1 / -1;
+    }
+
+    .pembelian-massal-mobile-footer {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid {
+        grid-template-columns:
+            minmax(0, 0.9fr)
+            minmax(0, 1.2fr)
+            minmax(0, 0.9fr);
+        gap: 9px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid input,
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid select {
+        padding-right: 8px;
+        padding-left: 8px;
+
+        font-size: 12px;
+    }
+}
+
+/* ======================================
+   LAYAR KECIL
+====================================== */
+
+@media (max-width: 360px) {
+
+    .pembelian-massal-mobile-header {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .pembelian-massal-mobile-body {
+        gap: 10px;
+        padding: 10px 8px 175px;
+    }
+
+    .pembelian-massal-mobile-info,
+    .pembelian-massal-mobile-items-section,
+    .pembelian-massal-mobile-payment-section {
+        padding: 12px 10px;
+        border-radius: 13px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-card {
+        padding: 10px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-grid {
+        gap: 7px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-card input,
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-card select {
+        padding-right: 8px;
+        padding-left: 8px;
+
+        font-size: 12px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid {
+        grid-template-columns:
+            minmax(0, 0.85fr)
+            minmax(0, 1.15fr)
+            minmax(0, 0.85fr);
+        gap: 4px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid label {
+        font-size: 9px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid input,
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid select {
+        min-height: 38px;
+
+        padding-right: 3px;
+        padding-left: 3px;
+
+        font-size: 10px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-identity-grid input[readonly] {
+        font-size: 9px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-total strong {
+        font-size: 14px;
+    }
+
+    .pembelian-massal-mobile-summary strong {
+        font-size: 19px;
+    }
+
+    .pembelian-massal-mobile-footer {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .pembelian-massal-mobile-footer-actions {
+        grid-template-columns: minmax(85px, 0.8fr) minmax(0, 1.6fr);
+        gap: 7px;
+    }
+
+    .pembelian-massal-mobile-reset-button,
+    .pembelian-massal-mobile-save-button {
+        padding-right: 7px;
+        padding-left: 7px;
+
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    #massal-mobile-items {
+        display: flex !important;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    #massal-items {
+        display: none !important;
+    }
+
+    #massal-mobile-items .pembelian-massal-mobile-card {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+}
+
+/* ======================================
+   KONVERSI + QTY + HARGA BELI
+   SATU BARIS
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-grid:has(
+    [data-massal-field="konversi"]
+) {
+    grid-template-columns:
+        minmax(0, 0.8fr)
+        minmax(0, 0.7fr)
+        minmax(0, 1.2fr);
+    gap: 7px;
+    width: 100%;
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-grid:has(
+    [data-massal-field="konversi"]
+) > div {
+    min-width: 0;
+    gap: 6px;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-grid:has(
+    [data-massal-field="konversi"]
+) label {
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-grid:has(
+    [data-massal-field="konversi"]
+) input {
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+    padding: 7px 5px;
+    font-size: 11px;
+    border-radius: 8px;
+}
+
+@media (max-width: 360px) {
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-grid:has(
+        [data-massal-field="konversi"]
+    ) {
+        grid-template-columns:
+            minmax(0, 0.8fr)
+            minmax(0, 0.7fr)
+            minmax(0, 1.2fr);
+        gap: 4px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-grid:has(
+        [data-massal-field="konversi"]
+    ) label {
+        font-size: 9px;
+    }
+
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-grid:has(
+        [data-massal-field="konversi"]
+    ) input {
+        min-height: 38px;
+        padding: 5px 3px;
+        font-size: 10px;
+    }
+}
+
+
+/* ======================================
+   PEMBELIAN MASSAL
+   MOBILE - FIELD HARGA
+====================================== */
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-field:has(
+    input[data-massal-field="harga"]
+) {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-field:has(
+    input[data-massal-field="harga"]
+) label {
+    color: #107941;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-field
+input[data-massal-field="harga"] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    margin: 0;
+    padding: 9px 10px;
+
+    color: #09704a;
+    background: #ffffff;
+
+    border: 1px solid #d6e2dd;
+    border-radius: 9px;
+    outline: none;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-field
+input[data-massal-field="harga"]:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-field
+input[data-massal-field="harga"]::-webkit-inner-spin-button,
+.pembelian-massal-mobile-page
+.pembelian-massal-mobile-field
+input[data-massal-field="harga"]::-webkit-outer-spin-button {
+    margin: 0;
+}
+
+@media (max-width: 360px) {
+    .pembelian-massal-mobile-page
+    .pembelian-massal-mobile-field
+    input[data-massal-field="harga"] {
+        min-height: 38px;
+        padding: 7px 6px;
+        font-size: 12px;
+    }
+}
+
+/* ======================================
+   MOBILE - PLACEHOLDER HARGA BELI
+====================================== */
+
+.pembelian-massal-mobile-page
+input::placeholder {
+    color: #8a9991;
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 1;
+    letter-spacing: -0.2px;
+}
+
+.pembelian-massal-mobile-page
+input[data-massal-field="harga"]::placeholder {
+    color: #8a9991;
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 1;
+    letter-spacing: -0.2px;
+}
+
+@media (max-width: 360px) {
+    .pembelian-massal-mobile-page
+    input[data-massal-field="harga"]::placeholder {
+        font-size: 10px;
+        letter-spacing: -0.3px;
+    }
+}

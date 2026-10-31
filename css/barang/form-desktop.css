@@ -1,0 +1,327 @@
+
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN BARANG FORM
+   DESKTOP CSS
+   FILE: pembelian-barang-form-desktop.css
+====================================== */
+
+@media (min-width: 769px) {
+
+    .barang-page {
+        width: 100%;
+        min-width: 0;
+        padding: 28px;
+        color: #17221e;
+        background:
+            radial-gradient(
+                circle at 90% 0%,
+                rgba(16, 185, 129, 0.07),
+                transparent 30%
+            ),
+            #f8fbfa;
+        box-sizing: border-box;
+    }
+
+    /* ======================================
+       HEADER
+    ====================================== */
+
+    .barang-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 26px;
+    }
+
+    .barang-header h2 {
+        margin: 0;
+        color: #17221e;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.6px;
+    }
+
+    .barang-header p {
+        margin: 8px 0 0;
+        color: #68766f;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* ======================================
+       FORM CARD
+    ====================================== */
+
+    .barang-form-card {
+        width: 100%;
+        padding: 30px;
+        background: linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f8fbfa 100%
+        );
+        border: 1px solid #d6e2dd;
+        border-radius: 18px;
+        box-shadow:
+            0 2px 5px rgba(23, 34, 30, 0.025),
+            0 12px 32px rgba(23, 34, 30, 0.045),
+            0 1px 0 rgba(255, 255, 255, 0.9) inset;
+        box-sizing: border-box;
+        transition:
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .barang-form-card:hover {
+        border-color: #c4d9cf;
+        box-shadow:
+            0 4px 8px rgba(23, 34, 30, 0.035),
+            0 18px 38px rgba(23, 34, 30, 0.065),
+            0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    }
+
+    .barang-form-card h3 {
+        position: relative;
+        margin: 0;
+        padding-left: 13px;
+        color: #17221e;
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .barang-form-card h3::before {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        left: 0;
+        width: 4px;
+        background: linear-gradient(
+            180deg,
+            #34d399,
+            #059669
+        );
+        border-radius: 4px;
+        content: "";
+    }
+
+    .barang-form-card h3 + p {
+        margin: 7px 0 0;
+        color: #68766f;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    /* ======================================
+       FORM GRID
+    ====================================== */
+
+    .barang-form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px 24px;
+        margin-top: 22px;
+    }
+
+    .barang-field {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        gap: 9px;
+    }
+
+    .barang-field label {
+        color: #35463e;
+        font-size: 13px;
+        font-weight: 650;
+        line-height: 1.4;
+    }
+
+    .barang-field input,
+    .barang-field select {
+        width: 100%;
+        min-width: 0;
+        height: 44px;
+        padding: 0 13px;
+        color: #17221e;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+        border-radius: 10px;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 14px;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background-color 0.2s ease;
+    }
+
+    .barang-field input::placeholder {
+        color: #9aa8a1;
+        opacity: 1;
+    }
+
+    .barang-field input:hover,
+    .barang-field select:hover {
+        border-color: #a9c7b8;
+    }
+
+    .barang-field input:focus,
+    .barang-field select:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    .barang-field input[readonly] {
+        color: #68766f;
+        background: #f0f5f2;
+        border-color: #dce7e1;
+        cursor: default;
+    }
+
+    .barang-field input[readonly]:focus {
+        border-color: #dce7e1;
+        box-shadow: none;
+    }
+
+    .barang-field input[type="number"] {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .barang-field select {
+        cursor: pointer;
+    }
+
+    /* ======================================
+       SECTION SPACING
+    ====================================== */
+
+    .barang-form-card > div[style*="margin-top"] {
+        margin-top: 30px !important;
+        padding-top: 24px;
+        border-top: 1px solid #e5ede8;
+    }
+
+    /* ======================================
+       FORM ACTIONS
+    ====================================== */
+
+    .barang-form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 32px;
+        padding-top: 22px;
+        border-top: 1px solid #e5ede8;
+    }
+
+    .barang-form-actions button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 125px;
+        min-height: 44px;
+        padding: 0 22px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .barang-form-actions .btn-secondary {
+        color: #405149;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+    }
+
+    .barang-form-actions .btn-secondary:hover {
+        color: #17221e;
+        background: #f0f5f2;
+        border-color: #b9ccc1;
+    }
+
+    .barang-form-actions .btn-primary {
+        color: #ffffff;
+        background: linear-gradient(
+            135deg,
+            #10b981,
+            #059669
+        );
+        border: 1px solid #059669;
+        box-shadow: 0 4px 10px rgba(5, 150, 105, 0.18);
+    }
+
+    .barang-form-actions .btn-primary:hover {
+        background: linear-gradient(
+            135deg,
+            #059669,
+            #047857
+        );
+        border-color: #047857;
+        box-shadow: 0 6px 15px rgba(5, 150, 105, 0.24);
+        transform: translateY(-1px);
+    }
+
+    .barang-form-actions button:active {
+        transform: translateY(0);
+    }
+
+    .barang-form-actions button:focus-visible {
+        outline: 3px solid rgba(16, 185, 129, 0.25);
+        outline-offset: 3px;
+    }
+
+    .barang-form-actions button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* ======================================
+       MEDIUM DESKTOP
+    ====================================== */
+
+    @media (min-width: 769px) and (max-width: 1100px) {
+
+        .barang-page {
+            padding: 22px;
+        }
+
+        .barang-form-card {
+            padding: 24px;
+        }
+
+        .barang-form-grid {
+            gap: 20px;
+        }
+
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .barang-form-card,
+        .barang-field input,
+        .barang-field select,
+        .barang-form-actions button {
+            transition: none;
+        }
+
+    }
+
+}

@@ -1,0 +1,749 @@
+
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN
+   BARCODE SCANNER DESKTOP CSS
+====================================== */
+
+@media (min-width: 769px) {
+
+    /* MODAL WRAPPER */
+
+    #pembelian-barcode-scanner,
+    #pembelian-barcode-scanner * {
+        box-sizing: border-box;
+    }
+
+    #pembelian-barcode-scanner {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 24px;
+
+        overflow: hidden;
+        font-family: inherit;
+    }
+
+    #pembelian-barcode-scanner[hidden] {
+        display: none !important;
+    }
+
+    /* BACKDROP */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: rgba(15, 23, 42, 0.78);
+
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+
+    /* MODAL */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-modal {
+        position: relative;
+        z-index: 1;
+
+        display: flex;
+        flex-direction: column;
+
+        width: 600px;
+        max-width: 100%;
+        max-height: calc(100vh - 48px);
+
+        margin: 0;
+        padding: 0;
+
+        overflow: hidden;
+
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    /* HEADER */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header {
+        position: relative;
+        z-index: 2;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        flex: 0 0 auto;
+        gap: 20px;
+
+        min-height: 76px;
+        padding: 14px 20px;
+
+        background: #15803d;
+        color: #ffffff;
+    }
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header > div {
+        min-width: 0;
+    }
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header h3 {
+        margin: 0;
+
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header p {
+        margin: 4px 0 0;
+
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* CLOSE BUTTON */
+
+    #pembelian-barcode-scanner
+    #pembelian-barcode-scanner-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 40px;
+
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+
+        margin: 0;
+        padding: 0;
+
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+
+        font-family: inherit;
+        font-size: 23px;
+        line-height: 1;
+
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+
+    #pembelian-barcode-scanner
+    #pembelian-barcode-scanner-close:hover {
+        background: rgba(255, 255, 255, 0.24);
+    }
+
+    /* CAMERA */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-camera {
+        position: relative;
+
+        flex: 0 1 auto;
+
+        width: 100%;
+        aspect-ratio: 4 / 3;
+
+        min-height: 240px;
+        max-height: 60vh;
+
+        overflow: hidden;
+        isolation: isolate;
+
+        background: #020617;
+    }
+
+    /* VIDEO */
+
+    #pembelian-barcode-scanner-video {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        border: 0;
+
+        object-fit: contain;
+        background: #020617;
+    }
+
+    /* SCANNER FRAME */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-frame {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+
+        width: 78%;
+        height: 30%;
+
+        transform: translate(-50%, -50%);
+
+        overflow: hidden;
+
+        border: 2px solid #22c55e;
+        border-radius: 10px;
+
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.22);
+
+        pointer-events: none;
+    }
+
+    /* RED LASER LINE */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-line {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 2px;
+
+        border-radius: 50%;
+
+        background: #ff2020;
+
+        box-shadow:
+            0 0 4px #ff2020,
+            0 0 8px #ff2020,
+            0 0 14px rgba(255, 0, 0, 0.9);
+
+        animation: pembelianBarcodeLaserScan 2s ease-in-out infinite alternate;
+
+        pointer-events: none;
+    }
+
+    /* STATUS */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-status {
+        position: relative;
+        z-index: 2;
+
+        flex: 0 0 auto;
+
+        margin: 0;
+        padding: 14px 18px;
+
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    #pembelian-barcode-scanner
+    #pembelian-barcode-scanner-message {
+        display: block;
+
+        width: 100%;
+        margin: 0;
+        padding: 12px 15px;
+
+        border: 1px solid #bbf7d0;
+        border-radius: 10px;
+
+        background: #f0fdf4;
+        color: #166534;
+
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.6;
+
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    /* ANIMATION */
+
+    @keyframes pembelianBarcodeLaserScan {
+        0% {
+            top: 0;
+            opacity: 0.7;
+        }
+
+        100% {
+            top: calc(100% - 2px);
+            opacity: 1;
+        }
+    }
+}
+
+/* REDUCED MOTION */
+
+@media (min-width: 769px) and (prefers-reduced-motion: reduce) {
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-line {
+        animation: none;
+    }
+}
+
+
+
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN
+   BARCODE SCANNER MOBILE CSS
+====================================== */
+
+@media (max-width: 768px) {
+
+    /* MODAL WRAPPER */
+
+    #pembelian-barcode-scanner,
+    #pembelian-barcode-scanner * {
+        box-sizing: border-box;
+    }
+
+    #pembelian-barcode-scanner {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+
+        margin: 0;
+        padding: 0;
+
+        overflow: hidden;
+        font-family: inherit;
+
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #pembelian-barcode-scanner[hidden] {
+        display: none !important;
+    }
+
+    /* BACKDROP */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: rgba(15, 23, 42, 0.88);
+
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+    }
+
+    /* MODAL */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-modal {
+        position: relative;
+        z-index: 1;
+
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        max-height: 100dvh;
+
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+
+        overflow: hidden;
+
+        background: #ffffff;
+    }
+
+    /* HEADER */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header {
+        position: relative;
+        z-index: 2;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        flex: 0 0 auto;
+        gap: 12px;
+
+        min-height: 58px;
+
+        padding: 10px 14px;
+        padding-top: max(10px, env(safe-area-inset-top));
+
+        background: #15803d;
+        color: #ffffff;
+
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header > div {
+        min-width: 0;
+    }
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header h3 {
+        margin: 0;
+
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-header p {
+        margin: 3px 0 0;
+
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    /* CLOSE BUTTON */
+
+    #pembelian-barcode-scanner
+    #pembelian-barcode-scanner-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 40px;
+
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+
+        margin: 0;
+        padding: 0;
+
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+
+        font-family: inherit;
+        font-size: 23px;
+        line-height: 1;
+
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #pembelian-barcode-scanner
+    #pembelian-barcode-scanner-close:active {
+        background: rgba(255, 255, 255, 0.28);
+        transform: scale(0.96);
+    }
+
+    /* CAMERA */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-camera {
+        position: relative;
+
+        flex: 1 1 auto;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 220px;
+
+        overflow: hidden;
+        isolation: isolate;
+
+        background: #020617;
+    }
+
+    /* VIDEO */
+
+    #pembelian-barcode-scanner-video {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        border: 0;
+
+        object-fit: contain;
+        background: #020617;
+    }
+
+    /* SCANNER FRAME */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-frame {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+
+        width: 86%;
+        height: 24%;
+        min-height: 65px;
+        max-height: 160px;
+
+        transform: translate(-50%, -50%);
+
+        overflow: hidden;
+
+        border: 2px solid #22c55e;
+        border-radius: 9px;
+
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.3);
+
+        pointer-events: none;
+    }
+
+    /* RED LASER LINE */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-line {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 2px;
+
+        border-radius: 50%;
+
+        background: #ff2020;
+
+        box-shadow:
+            0 0 4px #ff2020,
+            0 0 8px #ff2020,
+            0 0 14px rgba(255, 0, 0, 0.9);
+
+        animation: pembelianBarcodeLaserScan 2s ease-in-out infinite alternate;
+
+        pointer-events: none;
+    }
+
+    /* STATUS */
+
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-status {
+        position: relative;
+        z-index: 2;
+
+        flex: 0 0 auto;
+
+        margin: 0;
+        padding: 12px;
+
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    #pembelian-barcode-scanner
+    #pembelian-barcode-scanner-message {
+        display: block;
+
+        width: 100%;
+        margin: 0;
+        padding: 10px 12px;
+
+        border: 1px solid #bbf7d0;
+        border-radius: 9px;
+
+        background: #f0fdf4;
+        color: #166534;
+
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.5;
+
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes pembelianBarcodeLaserScan {
+        0% {
+            top: 0;
+            opacity: 0.7;
+        }
+
+        100% {
+            top: calc(100% - 2px);
+            opacity: 1;
+        }
+    }
+
+    /* SMALL MOBILE */
+
+    @media (max-width: 380px) {
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-header {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-header h3 {
+            font-size: 15px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-header p {
+            font-size: 11px;
+        }
+
+        #pembelian-barcode-scanner
+        #pembelian-barcode-scanner-close {
+            flex-basis: 36px;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-camera {
+            min-height: 200px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-frame {
+            width: 90%;
+            height: 26%;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-status {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+        #pembelian-barcode-scanner
+        #pembelian-barcode-scanner-message {
+            padding: 8px 10px;
+            font-size: 11px;
+        }
+    }
+
+    /* SHORT SCREEN / LANDSCAPE */
+
+    @media (max-height: 500px) {
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-header {
+            min-height: 44px;
+            padding-top: max(5px, env(safe-area-inset-top));
+            padding-bottom: 5px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-header h3 {
+            font-size: 14px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-header p {
+            margin-top: 2px;
+            font-size: 11px;
+        }
+
+        #pembelian-barcode-scanner
+        #pembelian-barcode-scanner-close {
+            flex-basis: 34px;
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-camera {
+            min-height: 150px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-frame {
+            width: 70%;
+            height: 35%;
+            min-height: 50px;
+        }
+
+        #pembelian-barcode-scanner
+        .pembelian-barcode-scanner-status {
+            padding-top: 8px;
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+        }
+
+        #pembelian-barcode-scanner
+        #pembelian-barcode-scanner-message {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+    }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+    #pembelian-barcode-scanner
+    .pembelian-barcode-scanner-line {
+        animation: none;
+    }
+}

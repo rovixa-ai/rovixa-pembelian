@@ -1,0 +1,260 @@
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN ITEM
+   DESKTOP CSS
+   FILE: pembelian-item-desktop.css
+====================================== */
+
+@media (min-width: 769px) {
+
+    /* ======================================
+       TABLE CONTAINER
+    ====================================== */
+
+    #pembelian-items {
+        width: 100%;
+    }
+
+    .pembelian-page table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        color: #17221e;
+        font-size: 13px;
+    }
+
+    .pembelian-page table thead th {
+        padding: 14px 12px;
+        color: #52635a;
+        background: #f0f6f3;
+        border-top: 1px solid #d6e2dd;
+        border-bottom: 1px solid #d6e2dd;
+        text-align: left;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+    }
+
+    .pembelian-page table thead th:first-child {
+        border-left: 1px solid #d6e2dd;
+        border-top-left-radius: 10px;
+    }
+
+    .pembelian-page table thead th:last-child {
+        border-right: 1px solid #d6e2dd;
+        border-top-right-radius: 10px;
+        text-align: center;
+    }
+
+    .pembelian-page table tbody td {
+        padding: 12px;
+        background: #ffffff;
+        border-bottom: 1px solid #e5ede8;
+        vertical-align: middle;
+    }
+
+    .pembelian-page table tbody tr td:first-child {
+        border-left: 1px solid #e5ede8;
+    }
+
+    .pembelian-page table tbody tr td:last-child {
+        border-right: 1px solid #e5ede8;
+        text-align: center;
+    }
+
+    .pembelian-page table tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 10px;
+    }
+
+    .pembelian-page table tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 10px;
+    }
+
+    .pembelian-page table tbody tr:hover td {
+        background: #f8fcfa;
+    }
+
+    /* ======================================
+       BARCODE INPUT
+    ====================================== */
+
+    #pembelian-items input[data-field="barcode"] {
+        width: 135px;
+        min-width: 110px;
+    }
+
+    /* ======================================
+       BARANG SELECT
+    ====================================== */
+
+    #pembelian-items select[data-field="barang"] {
+        width: 220px;
+        min-width: 180px;
+    }
+
+    /* ======================================
+       SATUAN SELECT
+    ====================================== */
+
+    #pembelian-items select[data-field="satuan"] {
+        width: 115px;
+        min-width: 95px;
+    }
+
+    /* ======================================
+       QTY, HARGA, DISKON
+    ====================================== */
+
+    #pembelian-items input[data-field="qty"] {
+        width: 76px;
+        min-width: 68px;
+        text-align: right;
+    }
+
+    #pembelian-items input[data-field="harga"] {
+        width: 120px;
+        min-width: 100px;
+        text-align: right;
+    }
+
+    #pembelian-items input[data-field="disc"] {
+        width: 85px;
+        min-width: 70px;
+        text-align: right;
+    }
+
+    #pembelian-items input,
+    #pembelian-items select {
+        height: 38px;
+        padding: 0 10px;
+        color: #17221e;
+        background: #ffffff;
+        border: 1px solid #d6e2dd;
+        border-radius: 8px;
+        outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 13px;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    #pembelian-items input::placeholder {
+        color: #9aa8a1;
+    }
+
+    #pembelian-items input:hover,
+    #pembelian-items select:hover {
+        border-color: #a9c7b8;
+    }
+
+    #pembelian-items input:focus,
+    #pembelian-items select:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    /* ======================================
+       TOTAL PER ITEM
+    ====================================== */
+
+    #pembelian-items .pembelian-total {
+        min-width: 125px;
+        color: #047857;
+        text-align: right;
+        white-space: nowrap;
+        font-size: 13px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* ======================================
+       REMOVE BUTTON
+    ====================================== */
+
+    #pembelian-items .pembelian-remove {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        color: #dc2626;
+        background: #fff5f5;
+        border: 1px solid #fee2e2;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    #pembelian-items .pembelian-remove:hover {
+        color: #ffffff;
+        background: #dc2626;
+        border-color: #dc2626;
+        transform: translateY(-1px);
+    }
+
+    #pembelian-items .pembelian-remove:active {
+        transform: translateY(0);
+    }
+
+    #pembelian-items .pembelian-remove:focus-visible {
+        outline: 3px solid rgba(220, 38, 38, 0.18);
+        outline-offset: 2px;
+    }
+
+    /* ======================================
+       MEDIUM DESKTOP
+    ====================================== */
+
+    @media (min-width: 769px) and (max-width: 1200px) {
+
+        #pembelian-items input[data-field="barcode"] {
+            width: 115px;
+        }
+
+        #pembelian-items select[data-field="barang"] {
+            width: 190px;
+            min-width: 160px;
+        }
+
+        #pembelian-items select[data-field="satuan"] {
+            width: 100px;
+            min-width: 85px;
+        }
+
+        #pembelian-items input[data-field="harga"] {
+            width: 105px;
+        }
+
+        #pembelian-items .pembelian-total {
+            min-width: 110px;
+        }
+
+    }
+
+    /* ======================================
+       REDUCED MOTION
+    ====================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        #pembelian-items input,
+        #pembelian-items select,
+        #pembelian-items .pembelian-remove {
+            transition: none;
+        }
+
+    }
+
+}

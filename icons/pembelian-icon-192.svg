@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-label="Rovixa Management">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#047857"/>
+      <stop offset="1" stop-color="#064e3b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6e7b0"/>
+      <stop offset="1" stop-color="#d6b96b"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="42" fill="url(#bg)"/>
+  <rect x="12" y="12" width="168" height="168" rx="34" fill="none" stroke="#d6b96b" stroke-opacity=".65" stroke-width="2"/>
+  <path d="M48 139V53h43c24 0 39 13 39 34 0 16-9 27-24 32l29 20h-29l-25-18H72v18H48zm24-39h18c10 0 16-4 16-13s-6-13-16-13H72v26z" fill="url(#gold)"/>
+  <circle cx="145" cy="48" r="7" fill="#f6e7b0"/>
+</svg>

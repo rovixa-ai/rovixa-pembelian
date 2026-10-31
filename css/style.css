@@ -1,0 +1,39 @@
+
+
+@import url("app-desktop.css");
+@import url("app-mobile.css");
+@import url("barcodescanner.css");
+
+
+@import url("pembelian/pembelian-desktop.css");
+@import url("pembelian/pembelian-mobile.css");
+@import url("pembelian/masal.css");
+@import url("pembelian/masal-mobile.css");
+
+
+@import url("./barang/form-desktop.css");
+@import url("./barang/form-mobile.css");
+@import url("./barang/item-desktop.css");
+@import url("./barang/item-mobile.css");
+@import url("./barang/payment-desktop.css");
+@import url("./barang/payment-mobile.css");
+
+
+@import url("./laporan/laporan-desktop.css");
+@import url("./laporan/laporan-mobile.css");
+@import url("./laporan/detail-desktop.css");
+@import url("./laporan/detail-mobile.css");
+
+@import url("loading.css");
+@import url("dialog.css");
+@import url("login.css");
+
+
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+

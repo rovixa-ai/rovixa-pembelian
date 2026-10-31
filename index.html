@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Pembelian</title>
+
+    <meta name="theme-color" content="#059669">
+
+<link rel="manifest" href="./manifest.json">
+
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+
+    <!-- SIDEBAR -->
+
+    <aside id="sidebar">
+
+        <div id="sidebar-content"></div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main id="main">
+
+
+        <header id="header">
+
+            <div id="header-content"></div>
+
+        </header>
+
+
+        <section id="page">
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- ======================================
+     DATABASE
+====================================== -->
+
+<script src="js/database/indexeddb.js"></script>
+
+
+<!-- ======================================
+     API
+====================================== -->
+<script src="../config/api-config.js"></script>
+<script src="js/api.js"></script>
+
+<script src="js/loading.js"></script>
+<script src="js/dialog.js"></script>
+
+
+<script src="js/store-config.js"></script>
+
+<!-- ======================================
+     SYNC
+====================================== -->
+
+<script src="js/sync/download.js"></script>
+
+<script src="js/sync/sync-core.js"></script>
+<script src="js/sync/sync-pembelian.js"></script>
+<script src="js/sync/sync-barang.js"></script>
+<script src="js/sync/sync-satuan.js"></script>
+<script src="js/sync/sync-stok.js"></script>
+<script src="js/sync/sync-queue.js"></script>
+
+
+<!-- ======================================
+     PEMBELIAN DATABASE CONFIG
+====================================== -->
+
+<script src="js/pembelian-database-config.js"></script>
+
+<script src="js/pembelian-database-render.js"></script>
+
+
+<!-- ======================================
+     PEMBELIAN
+====================================== -->
+
+
+<script src="js/pembelian/pembelian-scanner-render.js"></script>
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/@zxing/browser@latest"></script>
+<script src="js/pembelian/barcodescaner.js"></script>
+
+
+
+<script src="js/pembelian/masal-render.js"></script>
+<script src="js/pembelian/masal-mobile-render.js"></script>
+<script src="js/pembelian/masal-barang.js"></script>
+<script src="js/pembelian/masal-satuan.js"></script>
+<script src="js/pembelian/masal-item-mobile-render.js"></script>
+<script src="js/pembelian/masal-item.js"></script>
+
+<script src="js/pembelian/masal.js"></script>
+<script src="js/pembelian/masal-data.js"></script>
+<script src="js/pembelian/masal-total.js"></script>
+<script src="js/pembelian/masal-edit.js"></script>
+<script src="js/pembelian/masal-events.js"></script>
+<script src="js/pembelian/masal-sync.js"></script>
+<script src="js/pembelian/masal-save.js"></script>
+
+
+<script src="js/laporan/laporan-pembelian.js"></script>
+<script src="js/laporan/laporan-desktop-render.js"></script>
+<script src="js/laporan/laporan-mobile-render.js"></script>
+<script src="js/laporan/laporan-pembelian-render.js"></script>
+
+<script src="js/laporan/laporan-pembelian-filter.js"></script>
+
+<script src="js/laporan/laporan-pembelian-summary.js"></script>
+
+<script src="js/laporan/detail-desktop-render.js"></script>
+<script src="js/laporan/detail-mobile-render.js"></script>
+<script src="js/laporan/laporan-pembelian-table.js"></script>
+
+<script src="js/laporan/laporan-pembelian-detail.js"></script>
+
+<script src="js/laporan/laporan-pembelian-print.js"></script>
+<!-- ======================================
+     ROUTER
+====================================== -->
+
+<script src="js/router.js"></script>
+
+
+<!-- ======================================
+     APP
+====================================== -->
+
+<script src="js/app-desktop-render.js"></script>
+<script src="js/app-mobile-render.js"></script>
+
+<script src="js/login.js"></script>
+<script src="js/auth.js"></script>
+
+<script src="js/app.js"></script>
+
+<script src="./js/pwa.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,444 @@
+/* ======================================
+   TREEHOUSE POS
+   LAPORAN PEMBELIAN
+   DETAIL DESKTOP CSS
+   FILE: laporan-pembelian-detail-desktop.css
+====================================== */
+
+@media (min-width: 769px) {
+
+    /* ==============================
+       MODAL OVERLAY
+    ============================== */
+
+    .laporan-pembelian-detail-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        overflow: hidden;
+        font-family: inherit;
+        color: var(--text-color, #1f2937);
+    }
+
+    .laporan-pembelian-detail-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.58);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        cursor: pointer;
+    }
+
+    /* ==============================
+   DIALOG
+============================== */
+
+.laporan-pembelian-detail-dialog {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    width: min(1180px, 100%);
+    max-width: 1180px;
+
+    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
+
+    min-height: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    background: var(--card-background, #ffffff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 16px;
+
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+
+    animation: laporanPembelianDetailDesktopIn 0.2s ease-out;
+}
+
+@keyframes laporanPembelianDetailDesktopIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+    /* ==============================
+       HEADER
+    ============================== */
+
+    .laporan-pembelian-detail-header {
+        position: relative;
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px 24px;
+        background: var(--card-background, #ffffff);
+        border-bottom: 1px solid var(--border-color, #e5e7eb);
+    }
+
+    .laporan-pembelian-detail-header > div {
+        min-width: 0;
+    }
+
+    .laporan-pembelian-detail-header h3 {
+        margin: 0;
+        font-size: 21px;
+        line-height: 1.4;
+        font-weight: 700;
+        color: var(--text-color, #064d23);
+    }
+
+    .laporan-pembelian-detail-header p {
+        margin: 5px 0 0;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--text-secondary, #6b7280);
+        overflow-wrap: anywhere;
+    }
+
+    .laporan-pembelian-detail-close {
+        display: inline-flex;
+        flex: 0 0 40px;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 10px;
+        background: var(--background-secondary, #f9fafb);
+        color: var(--text-color, #374151);
+        font-size: 27px;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+            background 0.15s ease,
+            color 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .laporan-pembelian-detail-close:hover {
+        background: #fee2e2;
+        border-color: #fecaca;
+        color: #b91c1c;
+    }
+
+    .laporan-pembelian-detail-close:active {
+        transform: scale(0.96);
+    }
+
+    /* ==============================
+       INFORMASI PEMBELIAN
+    ============================== */
+
+    .laporan-pembelian-detail-info {
+        display: grid;
+        flex: 0 0 auto;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        padding: 18px 24px;
+        background: var(--background-secondary, #f9fafb);
+        border-bottom: 1px solid var(--border-color, #e5e7eb);
+    }
+
+    .laporan-pembelian-detail-info > div {
+                position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+        min-height: 60px;
+        padding: 16px;
+        background: linear-gradient(145deg, #ffffff, #bbf8d05d);
+        border: 1px solid #dce9e2;
+        border-radius: 12px;
+        box-shadow: 0 3px 9px rgba(23, 34, 30, 0.025);
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    .laporan-pembelian-detail-info span {
+        font-size: 11px;
+        line-height: 1.4;
+        color: var(--text-secondary, #6b7280);
+    }
+
+    .laporan-pembelian-detail-info strong {
+        font-size: 13px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: var(--text-color, #1f2937);
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    /* ==============================
+       SECTION
+    ============================== */
+
+    .laporan-pembelian-detail-section {
+        flex: 0 0 auto;
+        min-width: 0;
+        margin: 0;
+        padding: 18px 24px 0;
+    }
+
+    .laporan-pembelian-detail-section-title {
+        margin-bottom: 12px;
+        font-size: 15px;
+        line-height: 1.5;
+        font-weight: 700;
+        color: var(--text-color, #111827);
+    }
+
+    /* ==============================
+       TABLE WRAPPER
+    ============================== */
+
+    .laporan-pembelian-detail-table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow: auto;
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .laporan-pembelian-detail-table-wrapper::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+    }
+
+    .laporan-pembelian-detail-table-wrapper::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+    }
+
+    .laporan-pembelian-detail-table {
+        width: 100%;
+        min-width: 850px;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: var(--card-background, #ffffff);
+        font-size: 12px;
+        text-align: left;
+    }
+
+    .laporan-pembelian-detail-table th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        padding: 12px 13px;
+        background: var(--background-secondary, #f3f4f6);
+        border-bottom: 1px solid var(--border-color, #e5e7eb);
+        color: var(--text-secondary, #4b5563);
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .laporan-pembelian-detail-table td {
+        padding: 12px 13px;
+        border-bottom: 1px solid var(--border-color, #f0f1f3);
+        color: var(--text-color, #374151);
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .laporan-pembelian-detail-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .laporan-pembelian-detail-table tbody tr:hover {
+        background: var(--background-secondary, #f9fafb);
+    }
+
+    .laporan-pembelian-detail-table td strong {
+        font-weight: 700;
+        color: var(--text-color, #044d3c);
+    }
+
+    .laporan-pembelian-detail-empty {
+        padding: 28px 16px !important;
+        color: var(--text-secondary, #6b7280) !important;
+        text-align: center;
+        white-space: normal !important;
+    }
+
+    /* ==============================
+       TOTAL PEMBELIAN
+    ============================== */
+
+    .laporan-pembelian-detail-total {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0;
+        margin: 0 24px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border-color, #e5e7eb);
+    }
+
+    .laporan-pembelian-detail-total > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        width: 320px;
+        max-width: 100%;
+        padding: 6px 0;
+        font-size: 13px;
+    }
+
+    .laporan-pembelian-detail-total span {
+        color: var(--text-secondary, #6b7280);
+    }
+
+    .laporan-pembelian-detail-total strong {
+        color: var(--text-color, #374151);
+        font-weight: 650;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .laporan-pembelian-detail-total > div:last-child {
+        margin-top: 5px;
+        padding-top: 12px;
+        border-top: 1px dashed var(--border-color, #d1d5db);
+        font-size: 16px;
+    }
+
+    .laporan-pembelian-detail-total > div:last-child strong {
+        color: var(--primary-color, #16a34a);
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    /* ==============================
+       PAYMENT SECTION
+    ============================== */
+
+    .laporan-pembelian-detail-section
+    + .laporan-pembelian-detail-section {
+        padding-top: 18px;
+    }
+
+    /* ==============================
+       FOOTER
+    ============================== */
+
+    .laporan-pembelian-detail-footer {
+        position: relative;
+        display: flex;
+        flex: 0 0 auto;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 16px 24px;
+        background: var(--card-background, #ffffff);
+        border-top: 1px solid var(--border-color, #e5e7eb);
+    }
+
+    .laporan-pembelian-detail-footer button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 110px;
+        min-height: 40px;
+        padding: 9px 20px;
+        border: none;
+        border-radius: 9px;
+        background: var(--primary-color, #16a34a);
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+            background 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .laporan-pembelian-detail-footer button:hover {
+        background: var(--primary-hover, #15803d);
+    }
+
+    .laporan-pembelian-detail-footer button:active {
+        transform: scale(0.98);
+    }
+
+}
+
+/* ======================================
+   DESKTOP DENGAN TINGGI LAYAR PENDEK
+====================================== */
+
+@media (min-width: 769px) and (max-height: 760px) {
+
+    .laporan-pembelian-detail-modal {
+        padding: 14px;
+    }
+
+    .laporan-pembelian-detail-dialog {
+        max-height: calc(100vh - 28px);
+    }
+
+    .laporan-pembelian-detail-header {
+        padding: 14px 20px;
+    }
+
+    .laporan-pembelian-detail-info {
+        gap: 8px;
+        padding: 12px 20px;
+    }
+
+    .laporan-pembelian-detail-info > div {
+        padding: 9px;
+        gap: 5px;
+    }
+
+    .laporan-pembelian-detail-section {
+        padding: 12px 20px 0;
+    }
+
+    .laporan-pembelian-detail-section-title {
+        margin-bottom: 8px;
+    }
+
+    .laporan-pembelian-detail-table th,
+    .laporan-pembelian-detail-table td {
+        padding: 9px 11px;
+    }
+
+    .laporan-pembelian-detail-total {
+        margin-right: 20px;
+        margin-left: 20px;
+        padding: 9px 0;
+    }
+
+    .laporan-pembelian-detail-footer {
+        margin-top: 12px;
+        padding: 12px 20px;
+    }
+
+}

@@ -1,0 +1,827 @@
+
+/* ======================================
+   TREEHOUSE POS
+   PEMBELIAN MASSAL
+   DESKTOP PAGE CSS
+   FILE: pembelian-massal-desktop.css
+====================================== */
+
+/* ======================================
+   PAGE
+====================================== */
+
+.pembelian-massal-page,
+.pembelian-massal-page * {
+    box-sizing: border-box;
+}
+
+.pembelian-massal-page[hidden] {
+    display: none !important;
+}
+
+.pembelian-massal-page {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 8px;
+
+    color: #17221e;
+    font-family: inherit;
+}
+
+/* ======================================
+   CONTAINER
+====================================== */
+
+.pembelian-massal-container {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 1500px;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0 auto;
+    padding: 0;
+
+    overflow: visible;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff 0%,
+        #f8fbfa 100%
+    );
+
+    border: 1px solid #d6e2dd;
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 28px rgba(15, 23, 42, 0.055),
+        0 2px 6px rgba(15, 23, 42, 0.025);
+}
+
+/* ======================================
+   HEADER
+====================================== */
+
+.pembelian-massal-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex: 0 0 auto;
+    gap: 20px;
+
+    min-width: 0;
+    padding: 12px 14px;
+    margin-bottom: 1px;
+
+    background: #ffffff;
+
+    
+    border-radius: 16px 16px 0 0;
+}
+
+.pembelian-massal-header::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #059669,
+        #10b981,
+        #34d399
+    );
+
+    border-radius: 16px 16px 0 0;
+}
+
+.pembelian-massal-header > div {
+    min-width: 0;
+}
+
+.pembelian-massal-header h2 {
+    margin: 0;
+
+    color: #0a6e49;
+
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.4px;
+}
+
+.pembelian-massal-header p {
+    margin: 6px 0 0;
+
+    color: #68766f;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Tidak digunakan pada halaman utama */
+
+.pembelian-massal-close {
+    display: none !important;
+}
+
+/* ======================================
+   BODY
+====================================== */
+
+.pembelian-massal-body {
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 0px 28px;
+
+    overflow: visible;
+
+    overscroll-behavior: auto;
+}
+
+/* ======================================
+   SECTION
+====================================== */
+
+.pembelian-massal-info,
+.pembelian-massal-items-section,
+.pembelian-massal-payment-section {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce8e2;
+    border-radius: 15px;
+
+    box-shadow:
+        0 3px 12px rgba(15, 23, 42, 0.025);
+}
+
+.pembelian-massal-items-section,
+.pembelian-massal-payment-section {
+    margin-top: 20px;
+}
+
+.pembelian-massal-info h3,
+.pembelian-massal-items-section h3,
+.pembelian-massal-payment-section h3 {
+    margin: 0;
+
+    color: #24352d;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+/* ======================================
+   INFORMATION GRID
+====================================== */
+
+.pembelian-massal-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 0.8fr)
+        minmax(280px, 1.2fr)
+        minmax(220px, 1fr);
+
+    gap: 20px;
+    
+}
+
+/* ======================================
+   FORM
+====================================== */
+
+.pembelian-massal-field {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    gap: 8px;
+}
+
+.pembelian-massal-field label {
+    color: #52645a;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.pembelian-massal-page input,
+.pembelian-massal-page select {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    margin: 0;
+    padding: 10px 12px;
+
+    color: #24352d;
+    background: #ffffff;
+
+    border: 1px solid #d6e2dd;
+    border-radius: 10px;
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.4;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.pembelian-massal-page input:focus,
+.pembelian-massal-page select:focus {
+    border-color: #10b981;
+
+    box-shadow:
+        0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.pembelian-massal-page input[readonly] {
+    color: #68766f;
+    background: #f5f8f6;
+    cursor: default;
+}
+
+.pembelian-massal-page input:disabled,
+.pembelian-massal-page select:disabled {
+    color: #94a39a;
+    background: #f1f5f3;
+    cursor: not-allowed;
+}
+
+.pembelian-massal-page input[type="number"] {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ======================================
+   ITEM SECTION HEADER
+====================================== */
+
+.pembelian-massal-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.pembelian-massal-section-header > div {
+    min-width: 0;
+}
+
+.pembelian-massal-section-header p {
+    margin: 6px 0 0;
+
+    color: #68766f;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ======================================
+   DESKTOP TABLE
+====================================== */
+
+.pembelian-massal-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    overflow-x: auto;
+
+    overscroll-behavior-x: contain;
+
+    border: 1px solid #e1ebe6;
+    border-radius: 12px;
+}
+
+.pembelian-massal-table {
+    width: 100%;
+    min-width: 700px;
+
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: #ffffff;
+}
+
+/*
+   Urutan kolom:
+   1 Nama Barang
+   2 Kode
+   3 Barcode
+   4 Satuan
+   5 Konversi / Isi
+   6 Qty
+   7 Harga Beli
+   8 Total Harga
+   9 Jual PCS
+   10 Jual
+   11 Hapus
+*/
+
+.pembelian-massal-table th:nth-child(1),
+.pembelian-massal-table td:nth-child(1) {
+    width: 15%;
+}
+
+.pembelian-massal-table th:nth-child(2),
+.pembelian-massal-table td:nth-child(2) {
+    width: 10%;
+}
+
+.pembelian-massal-table th:nth-child(3),
+.pembelian-massal-table td:nth-child(3) {
+    width: 14%;
+}
+
+.pembelian-massal-table th:nth-child(4),
+.pembelian-massal-table td:nth-child(4) {
+    width: 9%;
+}
+
+.pembelian-massal-table th:nth-child(5),
+.pembelian-massal-table td:nth-child(5) {
+    width: 6%;
+}
+
+.pembelian-massal-table th:nth-child(6),
+.pembelian-massal-table td:nth-child(6) {
+    width: 5%;
+}
+
+.pembelian-massal-table th:nth-child(7),
+.pembelian-massal-table td:nth-child(7) {
+    width: 10%;
+}
+
+.pembelian-massal-table th:nth-child(8),
+.pembelian-massal-table td:nth-child(8) {
+    width: 10%;
+}
+
+.pembelian-massal-table th:nth-child(9),
+.pembelian-massal-table td:nth-child(9) {
+    width: 8%;
+}
+
+.pembelian-massal-table th:nth-child(10),
+.pembelian-massal-table td:nth-child(10) {
+    width: 10%;
+}
+
+.pembelian-massal-table th:nth-child(11),
+.pembelian-massal-table td:nth-child(11) {
+    width: 4%;
+}
+
+.pembelian-massal-table thead th {
+    padding: 13px 8px;
+
+    color: #52645a;
+    background: #f3f8f5;
+
+    border-bottom: 1px solid #dce8e2;
+
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+.pembelian-massal-table tbody td {
+    min-width: 0;
+    padding: 9px 6px;
+
+    border-bottom: 1px solid #edf2ef;
+
+    vertical-align: middle;
+}
+
+.pembelian-massal-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pembelian-massal-table tbody tr:hover {
+    background: #fbfdfc;
+}
+
+.pembelian-massal-table td:nth-child(2),
+.pembelian-massal-table td:nth-child(3) {
+    color: #52645a;
+
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.pembelian-massal-table td:nth-child(8) {
+    color: #047857;
+
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.pembelian-massal-table td:nth-child(11) {
+    text-align: center;
+}
+
+.pembelian-massal-table td input,
+.pembelian-massal-table td select {
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
+
+    padding: 7px 6px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+}
+
+/* Satuan */
+
+.pembelian-massal-table td:nth-child(4) select,
+.pembelian-massal-table td:nth-child(4) input {
+    padding-right: 3px;
+    padding-left: 5px;
+
+    font-size: 11px;
+}
+
+/* Konversi / Isi */
+
+.pembelian-massal-table td:nth-child(5) input {
+    padding-right: 3px;
+    padding-left: 3px;
+
+    text-align: center;
+}
+
+/* Qty */
+
+.pembelian-massal-table td:nth-child(6) input {
+    padding-right: 2px;
+    padding-left: 2px;
+
+    text-align: center;
+}
+
+/* Hapus barang */
+
+.pembelian-massal-table td button[data-massal-remove] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    color: #b42318;
+    background: #fff5f4;
+
+    border: 1px solid #f7d4d0;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 19px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.pembelian-massal-table td button[data-massal-remove]:hover {
+    color: #ffffff;
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+/* Hilangkan tombol angka pada Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hilangkan tombol angka pada Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* ======================================
+   BUTTONS
+====================================== */
+
+.pembelian-massal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-width: 0;
+    min-height: 42px;
+
+    padding: 10px 17px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+.pembelian-massal-button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.pembelian-massal-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.pembelian-massal-button-secondary {
+    color: #047857;
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+.pembelian-massal-button-secondary:hover:not(:disabled) {
+    background: #d1fae5;
+    border-color: #6ee7b7;
+}
+
+.pembelian-massal-add-bottom {
+    display: flex;
+    justify-content: flex-start;
+
+    margin-top: 14px;
+}
+
+/* Desktop menggunakan tabel */
+
+.pembelian-massal-mobile-items {
+    display: none !important;
+}
+
+/* ======================================
+   PAYMENT
+====================================== */
+
+.pembelian-massal-payment-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(220px, 0.8fr)
+        minmax(220px, 0.9fr)
+        minmax(180px, auto);
+
+    align-items: end;
+
+    gap: 20px;
+   
+}
+
+.pembelian-massal-payment-grid > * {
+    min-width: 0;
+}
+
+.pembelian-massal-payment-action {
+    display: flex;
+    align-items: flex-end;
+}
+
+.pembelian-massal-payment-action .pembelian-massal-button {
+    min-height: 44px;
+}
+
+/* ======================================
+   FOOTER
+====================================== */
+
+.pembelian-massal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex: 0 0 auto;
+
+    gap: 24px;
+    min-width: 0;
+
+    padding: 20px 28px;
+    margin-bottom: 28px;
+    background: #ffffff;
+
+    
+    border-radius: 0 0 16px 16px;
+}
+
+.pembelian-massal-summary {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    gap: 5px;
+}
+
+.pembelian-massal-summary span {
+    color: #68766f;
+
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.pembelian-massal-summary strong {
+    color: #047857;
+
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.3;
+
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+.pembelian-massal-footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    flex: 0 0 auto;
+    gap: 12px;
+}
+
+.pembelian-massal-button-cancel {
+    color: #af0202;
+    background: #ffffff;
+    border-color: #d80a0a;
+}
+
+.pembelian-massal-button-cancel:hover:not(:disabled) {
+    color: #8f020283;
+    background: #c2aeae;
+    border-color: #d80a0a92;
+}
+
+.pembelian-massal-button-save {
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #10b981 0%,
+        #059669 100%
+    );
+
+    border-color: #059669;
+
+    box-shadow:
+        0 4px 10px rgba(5, 150, 105, 0.16);
+}
+
+.pembelian-massal-button-save:hover:not(:disabled) {
+    background: linear-gradient(
+        135deg,
+        #059669 0%,
+        #047857 100%
+    );
+
+    box-shadow:
+        0 6px 14px rgba(5, 150, 105, 0.23);
+}
+
+/* ======================================
+   TABLET / DESKTOP KECIL
+====================================== */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+
+    .pembelian-massal-page {
+        padding: 14px;
+    }
+
+    .pembelian-massal-header {
+        padding: 20px;
+    }
+
+    .pembelian-massal-body {
+        padding: 18px;
+    }
+
+    .pembelian-massal-info,
+    .pembelian-massal-items-section,
+    .pembelian-massal-payment-section {
+        padding: 16px;
+    }
+
+    .pembelian-massal-info-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .pembelian-massal-info-grid > :last-child {
+        grid-column: 1 / -1;
+    }
+
+    .pembelian-massal-payment-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .pembelian-massal-payment-action {
+        grid-column: 1 / -1;
+    }
+
+    .pembelian-massal-payment-action
+    .pembelian-massal-button {
+        width: 100%;
+    }
+
+    .pembelian-massal-footer {
+        padding: 18px 20px;
+    }
+}
+
+/* ======================================
+   REDUCED MOTION
+====================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pembelian-massal-page *,
+    .pembelian-massal-page *::before,
+    .pembelian-massal-page *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}
+
