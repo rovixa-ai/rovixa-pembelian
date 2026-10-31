@@ -7,11 +7,6 @@
 
     "use strict";
 
-
-    /* ======================================
-       REGISTER SERVICE WORKER
-    ====================================== */
-
     function registerServiceWorker() {
 
         if (!("serviceWorker" in navigator)) {
@@ -21,9 +16,9 @@
         window.addEventListener("load", function () {
 
             navigator.serviceWorker.register(
-                "./service-worker.js",
+                "/service-worker.js",
                 {
-                    scope: "./"
+                    scope: "/"
                 }
             )
 
@@ -40,8 +35,6 @@
 
     }
 
-
     registerServiceWorker();
-
 
 })();

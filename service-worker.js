@@ -12,7 +12,7 @@
 
 const CACHE_PREFIX = "rovixa-pembelian-pwa";
 
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 
 const STATIC_CACHE =
     CACHE_PREFIX + "-static-" + CACHE_VERSION;
@@ -146,11 +146,13 @@ self.addEventListener("fetch", function (event) {
     }
 
     // Hanya menangani folder KasirPembelian.
-    const scopeURL = new URL("./", self.registration.scope);
+    // Hanya menangani request dalam scope aplikasi.
+            const scopeURL =
+                new URL(self.registration.scope).pathname;
 
-    if (!url.pathname.startsWith(scopeURL.pathname)) {
-        return;
-    }
+            if (!url.pathname.startsWith(scopeURL)) {
+                return;
+            }
 
 
     /* ======================================
