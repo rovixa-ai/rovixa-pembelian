@@ -1,7 +1,71 @@
+
 const StoreConfig = {
+
+    STORAGE_KEY: "ROVIXA_POS_STORE_CONFIG",
 
     config: {},
 
+
+    /* ======================================
+       LOAD CONFIG DARI LOCAL STORAGE
+    ====================================== */
+
+    async loadLocal() {
+
+        try {
+
+            const cached =
+                localStorage.getItem(
+                    this.STORAGE_KEY
+                );
+
+            if (!cached) {
+
+                this.config = {};
+
+                return this.config;
+
+            }
+
+            const parsed =
+                JSON.parse(cached);
+
+            if (
+                !parsed ||
+                typeof parsed !== "object" ||
+                Array.isArray(parsed)
+            ) {
+
+                throw new Error(
+                    "Format Store Config lokal tidak valid."
+                );
+
+            }
+
+            this.config = parsed;
+
+            return this.config;
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "STORE CONFIG LOCAL LOAD ERROR:",
+                error
+            );
+
+            throw error;
+
+        }
+
+    },
+
+
+    /* ======================================
+       LOAD CONFIG DARI SERVER
+       UNTUK BOOTSTRAP PERTAMA
+    ====================================== */
 
     async load() {
 
@@ -24,12 +88,31 @@ const StoreConfig = {
             }
 
 
-            this.config =
-                result.data?.storeConfig ||
-                {};
+            const storeConfig =
+                result.data?.storeConfig || {};
 
 
-            
+            if (
+                typeof storeConfig !== "object" ||
+                Array.isArray(storeConfig)
+            ) {
+
+                throw new Error(
+                    "Format Store Config dari server tidak valid."
+                );
+
+            }
+
+
+            this.config = {
+                ...storeConfig
+            };
+
+
+            localStorage.setItem(
+                this.STORAGE_KEY,
+                JSON.stringify(this.config)
+            );
 
 
             return this.config;
@@ -43,9 +126,7 @@ const StoreConfig = {
                 error
             );
 
-
-            this.config =
-                {};
+            this.config = {};
 
             throw error;
 
@@ -53,6 +134,10 @@ const StoreConfig = {
 
     },
 
+
+    /* ======================================
+       GET CONFIG
+    ====================================== */
 
     get(key) {
 
