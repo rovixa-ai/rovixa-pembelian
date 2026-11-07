@@ -585,75 +585,58 @@ const IncomingSync = {
 
 
     /* ======================================
-       STORE CONFIG
+   APPLY STORE CONFIG
+====================================== */
 
-       Memperbarui konfigurasi toko lokal
-       jika server mengirim storeConfig.
+applyStoreConfig(data) {
 
-       Jika server tidak mengirim properti
-       storeConfig, konfigurasi lokal
-       tidak diubah.
-    ====================================== */
+    if (
+        !data ||
+        !Object.prototype.hasOwnProperty.call(
+            data,
+            "storeConfig"
+        )
+    ) {
+        return false;
+    }
 
-    async applyStoreConfig(data) {
+    const storeConfig = data.storeConfig;
 
-        if (
-            !Object.prototype.hasOwnProperty.call(
-                data,
-                "storeConfig"
-            )
-        ) {
-            return {
-                updated: false
-            };
-        }
+    // Tidak ada perubahan konfigurasi toko.
+    if (storeConfig === null) {
+        return false;
+    }
 
-        const storeConfig = data.storeConfig;
-
-        if (
-            !storeConfig ||
-            typeof storeConfig !== "object" ||
-            Array.isArray(storeConfig)
-        ) {
-            throw new Error(
-                "Format Store Config dari server tidak valid."
-            );
-        }
-
-        if (
-            typeof StoreConfig === "undefined" ||
-            !StoreConfig.STORAGE_KEY
-        ) {
-            throw new Error(
-                "StoreConfig atau STORAGE_KEY tidak tersedia."
-            );
-        }
-
-        const newConfig = {
-            ...storeConfig
-        };
-
-        const serializedConfig =
-            JSON.stringify(newConfig);
-
-        if (!serializedConfig) {
-            throw new Error(
-                "Store Config gagal dikonversi."
-            );
-        }
-
-        localStorage.setItem(
-            StoreConfig.STORAGE_KEY,
-            serializedConfig
+    if (
+        typeof storeConfig !== "object" ||
+        Array.isArray(storeConfig)
+    ) {
+        throw new Error(
+            "Format Store Config dari server tidak valid."
         );
+    }
 
-        StoreConfig.config = newConfig;
+    if (
+        !StoreConfig.STORAGE_KEY
+    ) {
+        throw new Error(
+            "Store Config STORAGE_KEY tidak tersedia."
+        );
+    }
 
-        return {
-            updated: true
-        };
+    const newConfig = {
+        ...storeConfig
+    };
 
-    },
+    localStorage.setItem(
+        StoreConfig.STORAGE_KEY,
+        JSON.stringify(newConfig)
+    );
+
+    StoreConfig.config = newConfig;
+
+    return true;
+},
 
 
     /* ======================================
