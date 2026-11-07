@@ -1,3 +1,4 @@
+
 /*======================================
 TREEHOUSE POS
 APP
@@ -76,26 +77,92 @@ const App = {
             }
 
             /*======================================
-            DOWNLOAD DATA TRANSAKSI
+            PEMERIKSAAN BOOTSTRAP AWAL
             ======================================*/
 
             Loading.update(
-                "Mengunduh dan menyiapkan data transaksi...",
+                "Memeriksa data lokal...",
                 "Memuat Aplikasi"
             );
 
-            const result =
-                await Download.bootstrap();
+            const bootstrapState =
+                await DB.get(
+                    "config",
+                    "lastBootstrap"
+                );
+
+            /*======================================
+            BOOTSTRAP PERTAMA
+            DOWNLOAD SELURUH DATA
+            ======================================*/
 
             if (
-                !result ||
-                !result.success
+                !bootstrapState ||
+                !bootstrapState.value
             ) {
 
-                console.warn(
-                    "Download gagal:",
-                    result?.message
+                Loading.update(
+                    "Mengunduh data awal Pembelian...",
+                    "Memuat Aplikasi"
                 );
+
+                const result =
+                    await Download.bootstrap();
+
+                if (
+                    !result ||
+                    result.success !== true
+                ) {
+
+                    console.warn(
+                        "Download bootstrap gagal:",
+                        result?.message
+                    );
+
+                }
+
+            }
+
+            /*======================================
+            BOOTSTRAP SUDAH PERNAH BERHASIL
+            JALANKAN INCREMENTAL SYNC
+            ======================================*/
+
+            else {
+
+                Loading.update(
+                    "Memeriksa perubahan data server...",
+                    "Memuat Aplikasi"
+                );
+
+                if (
+                    typeof IncomingSync !== "undefined" &&
+                    typeof IncomingSync.sync === "function"
+                ) {
+
+                    const syncResult =
+                        await IncomingSync.sync();
+
+                    if (
+                        !syncResult ||
+                        syncResult.success !== true
+                    ) {
+
+                        console.warn(
+                            "Incoming sync gagal:",
+                            syncResult?.message
+                        );
+
+                    }
+
+                } else {
+
+                    console.warn(
+                        "IncomingSync tidak tersedia. " +
+                        "Data lokal tetap digunakan."
+                    );
+
+                }
 
             }
 
@@ -456,6 +523,7 @@ const App = {
         } else {
 
             this.pembelianMassalMediaQuery.addListener(
+                "change",
                 this.pembelianMassalResizeHandler
             );
 
@@ -502,6 +570,7 @@ const App = {
         } else {
 
             this.pembelianMassalMediaQuery.removeListener(
+                "change",
                 this.pembelianMassalResizeHandler
             );
 
