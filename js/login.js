@@ -99,7 +99,7 @@ const Login = {
 
     getStoreInfo() {
 
-        let storeName = "Treehouse POS";
+        let storeName = "Rovixa POS";
         let logo = "";
 
         if (
