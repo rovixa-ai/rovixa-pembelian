@@ -10,11 +10,157 @@ const App = {
     pembelianMassalResizeHandler: null,
     pembelianMassalResizeTimer: null,
     pembelianMassalRenderMode: null,
+    refreshInProgress: false,
 
     /*======================================
     INITIALIZE APPLICATION
     ======================================*/
 
+
+/*======================================
+REFRESH DOWNLOAD DATA AWAL
+======================================*/
+
+async refreshData() {
+
+    if (this.refreshInProgress) {
+        return;
+    }
+
+    this.refreshInProgress = true;
+
+    const button =
+        document.getElementById("header-refresh");
+
+    try {
+
+        if (button) {
+            button.disabled = true;
+        }
+
+        Loading.show(
+            "Mengunduh ulang data dari server...",
+            "Refresh Data"
+        );
+
+        /* DOWNLOAD STORE CONFIG */
+
+        Loading.update(
+            "Memuat konfigurasi toko...",
+            "Refresh Data"
+        );
+
+        await StoreConfig.load();
+
+        /* DOWNLOAD USERS */
+
+        Loading.update(
+            "Memuat data pengguna...",
+            "Refresh Data"
+        );
+
+        if (
+            typeof Download !== "undefined" &&
+            typeof Download.downloadUsers === "function"
+        ) {
+
+            const usersResult =
+                await Download.downloadUsers();
+
+            if (
+                !usersResult ||
+                usersResult.success !== true
+            ) {
+                throw new Error(
+                    usersResult?.message ||
+                    "Gagal mengunduh data pengguna."
+                );
+            }
+
+        }
+
+        /* DOWNLOAD SELURUH DATA AWAL */
+
+        Loading.update(
+            "Mengunduh seluruh data Pembelian...",
+            "Refresh Data"
+        );
+
+        if (
+            typeof Download === "undefined" ||
+            typeof Download.bootstrap !== "function"
+        ) {
+
+            throw new Error(
+                "Download.bootstrap() tidak tersedia."
+            );
+
+        }
+
+        const result =
+            await Download.bootstrap();
+
+        if (
+            !result ||
+            result.success !== true
+        ) {
+
+            throw new Error(
+                result?.message ||
+                "Download data awal gagal."
+            );
+
+        }
+
+        Dialog.alert(
+            "Data berhasil diperbarui dari server."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "REFRESH DATA ERROR:",
+            error
+        );
+
+        Dialog.error(
+            error.message ||
+            "Gagal memperbarui data."
+        );
+
+    } finally {
+
+        Loading.hide();
+
+        this.refreshInProgress = false;
+
+        if (button) {
+            button.disabled = false;
+        }
+
+    }
+
+},
+
+
+/*======================================
+BIND EVENT REFRESH HEADER
+======================================*/
+
+bindHeaderRefresh() {
+
+    const button =
+        document.getElementById("header-refresh");
+
+    if (!button) {
+        return;
+    }
+
+    button.onclick = () => {
+        this.refreshData();
+    };
+
+},
     
 async init() {
 
@@ -408,6 +554,8 @@ async init() {
         if (mobileMenu) {
             mobileMenu.remove();
         }
+
+        this.bindHeaderRefresh();
 
     },
 
