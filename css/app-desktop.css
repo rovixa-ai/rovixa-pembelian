@@ -318,6 +318,104 @@
         outline-offset: 3px;
     }
 
+
+    /* ======================================
+   HEADER REFRESH / RELOAD
+====================================== */
+
+.header-refresh-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+    gap: 8px;
+
+    min-height: 40px;
+    padding: 0 15px;
+
+    border: 1px solid rgba(16, 185, 129, 0.24);
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f0fbf5 100%
+        );
+
+    color: #059669;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(5, 150, 105, 0.06);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.header-refresh-button:hover {
+    border-color: rgba(16, 185, 129, 0.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ecfdf5 0%,
+            #d1fae5 100%
+        );
+
+    box-shadow:
+        0 7px 17px rgba(5, 150, 105, 0.12);
+
+    transform: translateY(-1px);
+}
+
+.header-refresh-button:active {
+    transform: translateY(0);
+}
+
+.header-refresh-button:focus-visible {
+    outline: 2px solid var(--app-emerald);
+    outline-offset: 3px;
+}
+
+.header-refresh-icon {
+    display: block;
+
+    flex: 0 0 auto;
+
+    width: 17px;
+    height: 17px;
+
+    object-fit: contain;
+}
+
+.header-refresh-text {
+    display: inline-block;
+    line-height: 1;
+}
+
+/* ======================================
+   REFRESH DISABLED
+====================================== */
+
+.header-refresh-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+}
+
     /* ======================================
        HEADER ADMIN
     ====================================== */

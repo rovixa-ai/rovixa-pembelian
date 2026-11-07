@@ -57,40 +57,59 @@ const AppDesktopRender = {
 
             <div class="header-actions">
 
-                <button
-                    type="button"
-                    class="header-report-button"
-                    id="header-laporan-pembelian"
-                >
-                <span>📊</span>
-                    <span>Laporan</span>
-                </button>
+    <button
+        type="button"
+        class="header-report-button"
+        id="header-laporan-pembelian"
+    >
+        <span>📊</span>
+        <span>Laporan</span>
+    </button>
 
-                <div class="header-admin">
-                    ${
-                        Auth.getCurrentUser()?.nama ||
-                        Auth.getCurrentUser()?.username ||
-                        "Admin"
-                    }
-                </div>
+    
 
-                <button
-                    type="button"
-                    class="header-logout-button"
-                    id="header-logout"
-                >
-                    <img
-                        src="icons/logout.png"
-                        alt=""
-                        class="header-logout-icon"
-                    >
+    <div class="header-admin">
+        ${
+            Auth.getCurrentUser()?.nama ||
+            Auth.getCurrentUser()?.username ||
+            "Admin"
+        }
+    </div>
 
-                    <span class="header-logout-text">
-                        Logout
-                    </span>
-                </button>
+    <button
+        type="button"
+        class="header-refresh-button"
+        id="header-refresh"
+        aria-label="Reload"
+        title="Reload"
+    >
+        <img
+            src="icons/refresh.png"
+            alt=""
+            class="header-refresh-icon"
+        >
+        <span class="header-refresh-text">
+            Reload
+        </span>
+    </button>
 
-            </div>
+    <button
+        type="button"
+        class="header-logout-button"
+        id="header-logout"
+    >
+        <img
+            src="icons/logout.png"
+            alt=""
+            class="header-logout-icon"
+        >
+
+        <span class="header-logout-text">
+            Logout
+        </span>
+    </button>
+
+</div>
 
         `;
 
