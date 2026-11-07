@@ -1,4 +1,11 @@
 
+/* ======================================
+   ROVIXA POS
+   PEMBELIAN MASSAL
+   BARCODE CAMERA SCANNER
+   ZXING ONLY
+====================================== */
+
 const PembelianBarcodeScanner = {
 
     stream: null,
@@ -10,7 +17,6 @@ const PembelianBarcodeScanner = {
     lastDetectedTime: 0,
     scanCount: 0,
 
-    targetMode: "pembelian",
     targetIndex: -1,
 
     /* STATUS SESI SCANNER */
@@ -19,33 +25,9 @@ const PembelianBarcodeScanner = {
     startPromise: null,
     sessionId: 0,
 
-    /* NATIVE SCANNER */
-
-    nativeScanning: false,
-    nativeFrameId: null,
-    nativeDetecting: false,
-    nativeLastScan: 0,
-    nativeScanInterval: 50,
-
     /* AUDIO BEEP */
 
     audioContext: null,
-
-    /* ======================================
-       BUKA SCANNER PEMBELIAN BIASA
-    ====================================== */
-
-    async open() {
-
-        if (this.sessionActive || this.startPromise) {
-            return;
-        }
-
-        this.targetMode = "pembelian";
-        this.targetIndex = -1;
-
-        await this.startScanner();
-    },
 
     /* ======================================
        BUKA SCANNER PEMBELIAN MASSAL
@@ -62,6 +44,7 @@ const PembelianBarcodeScanner = {
             index < 0 ||
             !PembelianMassal.items[index]
         ) {
+
             Dialog.error(
                 "Baris item Pembelian Massal tidak ditemukan.",
                 "Scanner Barcode"
@@ -70,7 +53,6 @@ const PembelianBarcodeScanner = {
             return;
         }
 
-        this.targetMode = "massal";
         this.targetIndex = index;
 
         await this.startScanner();
@@ -213,113 +195,6 @@ const PembelianBarcodeScanner = {
     },
 
     /* ======================================
-       CEK DUKUNGAN BARCODE DETECTOR
-    ====================================== */
-
-    async isNativeSupported() {
-
-        try {
-
-            if (!("BarcodeDetector" in window)) {
-                return false;
-            }
-
-            if (
-                typeof BarcodeDetector.getSupportedFormats !==
-                "function"
-            ) {
-                return false;
-            }
-
-            const formats =
-                await BarcodeDetector.getSupportedFormats();
-
-            return formats.includes("ean_13");
-
-        } catch (error) {
-
-            console.warn(
-                "BARCODE DETECTOR SUPPORT ERROR:",
-                error
-            );
-
-            return false;
-        }
-    },
-
-    /* ======================================
-       BUAT NATIVE DETECTOR
-    ====================================== */
-
-    async createNativeDetector() {
-
-        const formats =
-            await BarcodeDetector.getSupportedFormats();
-
-        if (!formats.includes("ean_13")) {
-            return null;
-        }
-
-        return new BarcodeDetector({
-            formats: ["ean_13"]
-        });
-    },
-
-    /* ======================================
-       BUAT ZXING READER
-    ====================================== */
-
-    createReader() {
-
-        if (
-            !window.ZXingBrowser ||
-            !window.ZXingBrowser.BrowserMultiFormatOneDReader
-        ) {
-            throw new Error(
-                "Library scanner barcode ZXing tidak tersedia."
-            );
-        }
-
-        const Reader =
-            ZXingBrowser.BrowserMultiFormatOneDReader;
-
-        try {
-
-            const HintType =
-                ZXingBrowser.DecodeHintType;
-
-            const BarcodeFormat =
-                ZXingBrowser.BarcodeFormat;
-
-            if (
-                HintType &&
-                BarcodeFormat &&
-                HintType.POSSIBLE_FORMATS &&
-                BarcodeFormat.EAN_13 !== undefined
-            ) {
-
-                const hints = new Map();
-
-                hints.set(
-                    HintType.POSSIBLE_FORMATS,
-                    [BarcodeFormat.EAN_13]
-                );
-
-                return new Reader(hints);
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "ZXING FORMAT HINT ERROR:",
-                error
-            );
-        }
-
-        return new Reader();
-    },
-
-    /* ======================================
        START SCANNER
     ====================================== */
 
@@ -395,7 +270,6 @@ const PembelianBarcodeScanner = {
 
         try {
 
-            this.stopNativeScanner();
             this.stopCamera();
 
             if (this.controls) {
@@ -403,10 +277,12 @@ const PembelianBarcodeScanner = {
                 try {
                     this.controls.stop();
                 } catch (error) {
+
                     console.warn(
                         "ZXING STOP ERROR:",
                         error
                     );
+
                 }
 
                 this.controls = null;
@@ -427,10 +303,12 @@ const PembelianBarcodeScanner = {
                         try {
                             track.stop();
                         } catch (error) {
+
                             console.warn(
                                 "CAMERA TRACK STOP ERROR:",
                                 error
                             );
+
                         }
 
                     });
@@ -455,67 +333,23 @@ const PembelianBarcodeScanner = {
                 !navigator.mediaDevices ||
                 !navigator.mediaDevices.getUserMedia
             ) {
+
                 throw new Error(
                     "Browser tidak mendukung akses kamera."
                 );
             }
 
+            if (
+                !window.ZXingBrowser ||
+                !window.ZXingBrowser.BrowserMultiFormatOneDReader
+            ) {
+
+                throw new Error(
+                    "Library scanner barcode ZXing tidak tersedia."
+                );
+            }
+
             this.scanning = true;
-
-            /*
-             * PRIORITAS 1:
-             * BARCODE DETECTOR NATIVE
-             */
-
-            const nativeSupported =
-                await this.isNativeSupported();
-
-            if (currentSession !== this.sessionId) {
-                return;
-            }
-
-            if (nativeSupported) {
-
-                try {
-
-                    const started =
-                        await this.startNativeScanner(
-                            currentSession,
-                            video,
-                            message
-                        );
-
-                    if (
-                        started &&
-                        currentSession === this.sessionId
-                    ) {
-                        return;
-                    }
-
-                } catch (nativeError) {
-
-                    if (currentSession !== this.sessionId) {
-                        return;
-                    }
-
-                    console.warn(
-                        "NATIVE SCANNER GAGAL, MENGGUNAKAN ZXING:",
-                        nativeError
-                    );
-
-                    this.stopNativeScanner();
-                    this.stopCamera();
-                }
-            }
-
-            /*
-             * PRIORITAS 2:
-             * ZXING FALLBACK
-             */
-
-            if (currentSession !== this.sessionId) {
-                return;
-            }
 
             await this.startZXingScanner(
                 currentSession,
@@ -578,198 +412,7 @@ const PembelianBarcodeScanner = {
     },
 
     /* ======================================
-       NATIVE CAMERA SCANNER
-    ====================================== */
-
-    async startNativeScanner(
-        currentSession,
-        video,
-        message
-    ) {
-
-        this.detector =
-            await this.createNativeDetector();
-
-        if (!this.detector) {
-            return false;
-        }
-
-        if (currentSession !== this.sessionId) {
-            return false;
-        }
-
-        const constraints = {
-            audio: false,
-
-            video: {
-                width: {
-                    ideal: 1280
-                },
-
-                height: {
-                    ideal: 720
-                },
-
-                frameRate: {
-                    ideal: 30,
-                    max: 30
-                },
-
-                facingMode: {
-                    ideal: "environment"
-                }
-            }
-        };
-
-        const stream =
-            await navigator.mediaDevices.getUserMedia(
-                constraints
-            );
-
-        if (currentSession !== this.sessionId) {
-
-            stream.getTracks().forEach(track => track.stop());
-
-            return false;
-        }
-
-        this.stream = stream;
-
-        video.srcObject = stream;
-
-        video.setAttribute("playsinline", "");
-        video.setAttribute("autoplay", "");
-        video.muted = true;
-
-        await video.play();
-
-        if (currentSession !== this.sessionId) {
-            this.stopCamera();
-            return false;
-        }
-
-        await this.optimizeCamera(video);
-
-        if (currentSession !== this.sessionId) {
-            this.stopCamera();
-            return false;
-        }
-
-        this.nativeScanning = true;
-        this.nativeDetecting = false;
-        this.nativeLastScan = 0;
-
-        if (message) {
-            message.textContent =
-                "Arahkan barcode ke dalam kotak...";
-        }
-
-        this.nativeScanLoop(
-            currentSession,
-            video,
-            message
-        );
-
-        return true;
-    },
-
-    /* ======================================
-       LOOP NATIVE DETECTOR
-    ====================================== */
-
-    nativeScanLoop(
-        currentSession,
-        video,
-        message
-    ) {
-
-        const scanFrame = async (timestamp) => {
-
-            if (
-                currentSession !== this.sessionId ||
-                !this.sessionActive ||
-                !this.scanning ||
-                !this.nativeScanning
-            ) {
-                return;
-            }
-
-            this.nativeFrameId =
-                requestAnimationFrame(scanFrame);
-
-            if (
-                this.nativeDetecting ||
-                video.readyState < 2 ||
-                timestamp - this.nativeLastScan <
-                    this.nativeScanInterval
-            ) {
-                return;
-            }
-
-            this.nativeLastScan = timestamp;
-            this.nativeDetecting = true;
-
-            try {
-
-                const results =
-                    await this.detector.detect(video);
-
-                if (
-                    currentSession !== this.sessionId ||
-                    !this.sessionActive ||
-                    !this.scanning
-                ) {
-                    return;
-                }
-
-                this.scanCount++;
-
-                if (!results || results.length === 0) {
-                    return;
-                }
-
-                for (const result of results) {
-
-                    const barcode = String(
-                        result.rawValue || ""
-                    ).trim();
-
-                    if (!barcode) {
-                        continue;
-                    }
-
-                    if (!/^\d{13}$/.test(barcode)) {
-                        continue;
-                    }
-
-                    await this.onBarcodeDetected(
-                        barcode,
-                        currentSession,
-                        message
-                    );
-
-                    break;
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "NATIVE BARCODE DETECT ERROR:",
-                    error
-                );
-
-            } finally {
-
-                this.nativeDetecting = false;
-            }
-        };
-
-        this.nativeFrameId =
-            requestAnimationFrame(scanFrame);
-    },
-
-    /* ======================================
-       ZXING FALLBACK SCANNER
+       ZXING SCANNER
     ====================================== */
 
     async startZXingScanner(
@@ -778,38 +421,51 @@ const PembelianBarcodeScanner = {
         message
     ) {
 
-        this.detector = this.createReader();
+        this.detector =
+            new ZXingBrowser.BrowserMultiFormatOneDReader();
 
         if (
             "timeBetweenDecodingAttempts" in this.detector
         ) {
+
             this.detector.timeBetweenDecodingAttempts = 50;
         }
 
         const constraints = {
+
             audio: false,
 
             video: {
+
                 width: {
-                    ideal: 1280
+                    ideal: 1280,
+                    min: 960
                 },
 
                 height: {
-                    ideal: 720
+                    ideal: 720,
+                    min: 540
                 },
 
                 frameRate: {
                     ideal: 30,
-                    max: 30
+                    max: 60
                 },
 
                 facingMode: {
                     ideal: "environment"
+                },
+
+                focusMode: {
+                    ideal: "continuous"
                 }
+
             }
+
         };
 
         if (message) {
+
             message.textContent =
                 "Arahkan barcode ke dalam kotak...";
         }
@@ -852,10 +508,12 @@ const PembelianBarcodeScanner = {
                         try {
                             activeControls.stop();
                         } catch (stopError) {
+
                             console.warn(
                                 "ZXING STOP ERROR:",
                                 stopError
                             );
+
                         }
                     }
 
@@ -876,10 +534,12 @@ const PembelianBarcodeScanner = {
             try {
                 controls.stop();
             } catch (error) {
+
                 console.warn(
                     "ZXING STOP ERROR:",
                     error
                 );
+
             }
 
             return;
@@ -925,7 +585,31 @@ const PembelianBarcodeScanner = {
                 Array.isArray(capabilities.focusMode) &&
                 capabilities.focusMode.includes("continuous")
             ) {
+
                 advanced.focusMode = "continuous";
+            }
+
+            if (capabilities.zoom) {
+
+                const minZoom =
+                    Number(capabilities.zoom.min);
+
+                const maxZoom =
+                    Number(capabilities.zoom.max);
+
+                const targetZoom =
+                    Math.min(
+                        maxZoom,
+                        Math.max(minZoom, 1.5)
+                    );
+
+                if (
+                    targetZoom >= minZoom &&
+                    targetZoom <= maxZoom
+                ) {
+
+                    advanced.zoom = targetZoom;
+                }
             }
 
             if (
@@ -982,17 +666,17 @@ const PembelianBarcodeScanner = {
         this.lastDetectedTime = now;
         this.scanning = false;
 
-        this.stopNativeScanner();
-
         if (this.controls) {
 
             try {
                 this.controls.stop();
             } catch (error) {
+
                 console.warn(
                     "ZXING STOP ERROR:",
                     error
                 );
+
             }
 
             this.controls = null;
@@ -1001,6 +685,7 @@ const PembelianBarcodeScanner = {
         this.playBeep("success");
 
         if (message) {
+
             message.textContent =
                 "Barcode ditemukan: " + barcode;
         }
@@ -1009,7 +694,7 @@ const PembelianBarcodeScanner = {
     },
 
     /* ======================================
-       PROSES BARCODE
+       PROSES BARCODE PEMBELIAN MASSAL
     ====================================== */
 
     async handleBarcode(barcode) {
@@ -1020,53 +705,29 @@ const PembelianBarcodeScanner = {
             return;
         }
 
-        const mode = this.targetMode;
         const index = this.targetIndex;
 
-        const message = document.getElementById(
-            "pembelian-barcode-scanner-message"
+        const page = document.getElementById(
+            "pembelian-massal-modal"
         );
-
-        if (message) {
-            message.textContent =
-                "Barcode ditemukan: " + barcode;
-        }
 
         try {
 
-            if (mode === "massal") {
+            if (
+                !page ||
+                !PembelianMassal.items[index]
+            ) {
 
-                const page = document.getElementById(
-                    "pembelian-massal-modal"
+                throw new Error(
+                    "Baris item Pembelian Massal tidak ditemukan."
                 );
-
-                if (
-                    !page ||
-                    !PembelianMassal.items[index]
-                ) {
-                    throw new Error(
-                        "Baris item Pembelian Massal tidak ditemukan."
-                    );
-                }
-
-                PembelianMassal.cariBarcodeSatuan(
-                    index,
-                    barcode,
-                    page
-                );
-
-            } else {
-
-                const barcodeInput = document.getElementById(
-                    "pembelian-barcode"
-                );
-
-                if (barcodeInput) {
-                    barcodeInput.value = barcode;
-                }
-
-                await Pembelian.scanBarcode(barcode);
             }
+
+            PembelianMassal.cariBarcodeSatuan(
+                index,
+                barcode,
+                page
+            );
 
         } catch (error) {
 
@@ -1084,18 +745,6 @@ const PembelianBarcodeScanner = {
         } finally {
 
             this.close();
-
-            if (mode === "pembelian") {
-
-                const barcodeInput = document.getElementById(
-                    "pembelian-barcode"
-                );
-
-                if (barcodeInput) {
-                    barcodeInput.value = "";
-                    barcodeInput.focus();
-                }
-            }
         }
     },
 
@@ -1148,27 +797,6 @@ const PembelianBarcodeScanner = {
     },
 
     /* ======================================
-       STOP NATIVE SCANNER
-    ====================================== */
-
-    stopNativeScanner() {
-
-        this.nativeScanning = false;
-
-        if (this.nativeFrameId !== null) {
-
-            cancelAnimationFrame(
-                this.nativeFrameId
-            );
-
-            this.nativeFrameId = null;
-        }
-
-        this.nativeDetecting = false;
-        this.nativeLastScan = 0;
-    },
-
-    /* ======================================
        CLOSE
     ====================================== */
 
@@ -1178,17 +806,17 @@ const PembelianBarcodeScanner = {
         this.sessionActive = false;
         this.scanning = false;
 
-        this.stopNativeScanner();
-
         if (this.controls) {
 
             try {
                 this.controls.stop();
             } catch (error) {
+
                 console.warn(
                     "ZXING STOP ERROR:",
                     error
                 );
+
             }
 
             this.controls = null;
@@ -1225,10 +853,12 @@ const PembelianBarcodeScanner = {
                         try {
                             track.stop();
                         } catch (error) {
+
                             console.warn(
                                 "CAMERA TRACK STOP ERROR:",
                                 error
                             );
+
                         }
 
                     });
@@ -1243,7 +873,6 @@ const PembelianBarcodeScanner = {
         this.lastDetectedTime = 0;
         this.scanCount = 0;
 
-        this.targetMode = "pembelian";
         this.targetIndex = -1;
     },
 
@@ -1262,11 +891,14 @@ const PembelianBarcodeScanner = {
             try {
                 track.stop();
             } catch (error) {
+
                 console.warn(
                     "CAMERA TRACK STOP ERROR:",
                     error
                 );
+
             }
+
         });
 
         this.stream = null;
