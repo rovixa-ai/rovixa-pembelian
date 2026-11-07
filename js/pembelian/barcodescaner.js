@@ -3,7 +3,6 @@ const PembelianBarcodeScanner = {
 
     stream: null,
     detector: null,
-    reader: null,
     scanning: false,
     controls: null,
 
@@ -20,30 +19,9 @@ const PembelianBarcodeScanner = {
     startPromise: null,
     sessionId: 0,
 
-    /* NATIVE SCANNER */
-
-    animationFrameId: null,
-    detectBusy: false,
-    lastFrameTime: 0,
-    nativeScanning: false,
-
-    /* AUDIO */
+    /* AUDIO BEEP */
 
     audioContext: null,
-
-    /* FORMAT BARCODE */
-
-    supportedBarcodeFormats: [
-        "ean_13",
-        "ean_8",
-        "upc_a",
-        "upc_e",
-        "code_128",
-        "code_39",
-        "itf",
-        "qr_code",
-        "data_matrix"
-    ],
 
     /* ======================================
        BUKA SCANNER PEMBELIAN BIASA
@@ -76,7 +54,6 @@ const PembelianBarcodeScanner = {
             index < 0 ||
             !PembelianMassal.items[index]
         ) {
-
             Dialog.error(
                 "Baris item Pembelian Massal tidak ditemukan.",
                 "Scanner Barcode"
@@ -92,7 +69,7 @@ const PembelianBarcodeScanner = {
     },
 
     /* ======================================
-       AUDIO BEEP
+       AUDIO UNLOCK
     ====================================== */
 
     async unlockAudio() {
@@ -128,6 +105,10 @@ const PembelianBarcodeScanner = {
         }
     },
 
+    /* ======================================
+       AUDIO BEEP
+    ====================================== */
+
     playBeep(type = "success") {
 
         try {
@@ -154,8 +135,7 @@ const PembelianBarcodeScanner = {
                 const gain =
                     context.createGain();
 
-                const isError =
-                    type === "error";
+                const isError = type === "error";
 
                 oscillator.type = "square";
 
@@ -191,7 +171,10 @@ const PembelianBarcodeScanner = {
                 gain.connect(context.destination);
 
                 oscillator.start(now);
-                oscillator.stop(now + duration + 0.01);
+
+                oscillator.stop(
+                    now + duration + 0.01
+                );
             };
 
             if (context.state === "suspended") {
@@ -199,10 +182,12 @@ const PembelianBarcodeScanner = {
                 context.resume()
                     .then(playSound)
                     .catch(error => {
+
                         console.warn(
                             "PEMBELIAN BARCODE AUDIO ERROR:",
                             error
                         );
+
                     });
 
             } else {
@@ -217,6 +202,66 @@ const PembelianBarcodeScanner = {
                 error
             );
         }
+    },
+
+    /* ======================================
+       BUAT DECODER
+       PRIORITAS EAN-13
+    ====================================== */
+
+    createReader() {
+
+        const Reader =
+            ZXingBrowser.BrowserMultiFormatOneDReader;
+
+        if (!Reader) {
+            throw new Error(
+                "Library scanner barcode 1D tidak tersedia."
+            );
+        }
+
+        /*
+         * Gunakan pembatasan format jika enum
+         * tersedia pada versi ZXing yang digunakan.
+         *
+         * Jika tidak tersedia, gunakan reader
+         * tanpa hints sebagai fallback.
+         */
+
+        try {
+
+            const HintType =
+                ZXingBrowser.DecodeHintType;
+
+            const BarcodeFormat =
+                ZXingBrowser.BarcodeFormat;
+
+            if (
+                HintType &&
+                BarcodeFormat &&
+                HintType.POSSIBLE_FORMATS &&
+                BarcodeFormat.EAN_13 !== undefined
+            ) {
+
+                const hints = new Map();
+
+                hints.set(
+                    HintType.POSSIBLE_FORMATS,
+                    [BarcodeFormat.EAN_13]
+                );
+
+                return new Reader(hints);
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "ZXING FORMAT HINT TIDAK TERSEDIA:",
+                error
+            );
+        }
+
+        return new Reader();
     },
 
     /* ======================================
@@ -276,6 +321,12 @@ const PembelianBarcodeScanner = {
 
         } finally {
 
+            /*
+             * Bersihkan promise berdasarkan identitasnya.
+             * Tetap bekerja meskipun sesi ditutup ketika
+             * kamera masih dalam proses startup.
+             */
+
             if (this.startPromise === startupPromise) {
                 this.startPromise = null;
             }
@@ -297,8 +348,6 @@ const PembelianBarcodeScanner = {
 
             this.stopCamera();
 
-            this.stopNativeScanner();
-
             if (this.controls) {
 
                 try {
@@ -315,32 +364,36 @@ const PembelianBarcodeScanner = {
 
             try {
                 video.pause();
-            } catch (error) {}
+            } catch (error) {
+                // Video belum berjalan.
+            }
 
             if (video.srcObject) {
 
                 video.srcObject
                     .getTracks()
                     .forEach(track => {
+
                         try {
                             track.stop();
-                        } catch (error) {}
+                        } catch (error) {
+                            console.warn(
+                                "CAMERA TRACK STOP ERROR:",
+                                error
+                            );
+                        }
+
                     });
 
                 video.srcObject = null;
             }
 
             this.detector = null;
-            this.reader = null;
-
             this.scanning = false;
-            this.detectBusy = false;
-            this.nativeScanning = false;
 
             this.lastBarcode = "";
             this.lastDetectedTime = 0;
             this.scanCount = 0;
-            this.lastFrameTime = 0;
 
             modal.hidden = false;
 
@@ -352,15 +405,38 @@ const PembelianBarcodeScanner = {
                 !navigator.mediaDevices ||
                 !navigator.mediaDevices.getUserMedia
             ) {
-
                 throw new Error(
                     "Browser tidak mendukung akses kamera."
                 );
             }
 
-            /* ==================================
-               KAMERA BELAKANG ANDROID
-            ================================== */
+            if (
+                !window.ZXingBrowser ||
+                !window.ZXingBrowser.BrowserMultiFormatOneDReader
+            ) {
+                throw new Error(
+                    "Library scanner barcode 1D tidak tersedia."
+                );
+            }
+
+            this.detector = this.createReader();
+
+            /*
+             * Interval decoding.
+             * 50 ms memberi kesempatan sekitar 20 percobaan/detik.
+             */
+
+            if (
+                "timeBetweenDecodingAttempts" in this.detector
+            ) {
+                this.detector.timeBetweenDecodingAttempts = 50;
+            }
+
+            /*
+             * Resolusi dibuat seimbang:
+             * cukup detail untuk EAN-13,
+             * tetapi tidak terlalu berat untuk HP.
+             */
 
             const constraints = {
                 audio: false,
@@ -376,7 +452,7 @@ const PembelianBarcodeScanner = {
 
                     frameRate: {
                         ideal: 30,
-                        max: 60
+                        max: 30
                     },
 
                     facingMode: {
@@ -385,114 +461,192 @@ const PembelianBarcodeScanner = {
                 }
             };
 
-            const stream =
-                await navigator.mediaDevices.getUserMedia(
-                    constraints
+            this.scanning = true;
+
+            if (message) {
+                message.textContent =
+                    "Arahkan barcode ke dalam kotak...";
+            }
+
+            const controls =
+                await this.detector.decodeFromConstraints(
+                    constraints,
+                    video,
+                    async (result, error, callbackControls) => {
+
+                        /*
+                         * Abaikan callback sesi lama.
+                         */
+
+                        if (
+                            currentSession !== this.sessionId ||
+                            !this.sessionActive ||
+                            !this.scanning
+                        ) {
+                            return;
+                        }
+
+                        this.scanCount++;
+
+                        if (error || !result) {
+                            return;
+                        }
+
+                        const barcode = String(
+                            result.getText
+                                ? result.getText()
+                                : ""
+                        ).trim();
+
+                        if (!barcode) {
+                            return;
+                        }
+
+                        /*
+                         * Validasi EAN-13.
+                         */
+
+                        if (!/^\d{13}$/.test(barcode)) {
+                            return;
+                        }
+
+                        /*
+                         * Cegah pembacaan berulang.
+                         */
+
+                        const now = Date.now();
+
+                        if (
+                            barcode === this.lastBarcode &&
+                            now - this.lastDetectedTime < 1000
+                        ) {
+                            return;
+                        }
+
+                        /*
+                         * Kunci scanner sebelum menjalankan
+                         * proses barcode agar tidak diproses ganda.
+                         */
+
+                        this.lastBarcode = barcode;
+                        this.lastDetectedTime = now;
+                        this.scanning = false;
+
+                        this.playBeep("success");
+
+                        if (message) {
+                            message.textContent =
+                                "Barcode ditemukan: " + barcode;
+                        }
+
+                        const activeControls =
+                            callbackControls || this.controls;
+
+                        if (activeControls) {
+
+                            try {
+                                activeControls.stop();
+                            } catch (stopError) {
+                                console.warn(
+                                    "ZXING STOP ERROR:",
+                                    stopError
+                                );
+                            }
+                        }
+
+                        if (this.controls === activeControls) {
+                            this.controls = null;
+                        }
+
+                        await this.handleBarcode(barcode);
+                    }
                 );
 
-            /* CEK SESI SETELAH KAMERA DIPEROLEH */
+            /*
+             * Jika sesi sudah ditutup ketika ZXing
+             * sedang menyiapkan kamera, hentikan kontrolnya.
+             */
 
-            if (
-                currentSession !== this.sessionId ||
-                !this.sessionActive
-            ) {
+            if (currentSession !== this.sessionId) {
 
-                stream.getTracks().forEach(track => {
-                    track.stop();
-                });
+                try {
+                    controls.stop();
+                } catch (error) {
+                    console.warn(
+                        "ZXING STOP ERROR:",
+                        error
+                    );
+                }
 
                 return;
             }
 
-            this.stream = stream;
+            this.controls = controls;
 
-            video.muted = true;
-            video.autoplay = true;
-            video.playsInline = true;
-
-            video.setAttribute(
-                "playsinline",
-                "true"
-            );
-
-            video.setAttribute(
-                "autoplay",
-                "true"
-            );
-
-            video.srcObject = stream;
-
-            await video.play();
-
-            if (
-                currentSession !== this.sessionId ||
-                !this.sessionActive
-            ) {
-                return;
+            if (video.srcObject) {
+                this.stream = video.srcObject;
             }
 
             /* ==================================
                OPTIMASI KAMERA
             ================================== */
 
-            this.optimizeCamera();
+            try {
 
-            this.scanning = true;
-
-            if (message) {
-
-                message.textContent =
-                    "Menyiapkan pembaca barcode...";
-            }
-
-            /* ==================================
-               PILIH READER
-            ================================== */
-
-            const nativeReady =
-                await this.initializeNativeReader();
-
-            if (
-                currentSession !== this.sessionId ||
-                !this.sessionActive
-            ) {
-                return;
-            }
-
-            if (nativeReady) {
-
-                console.info(
-                    "PEMBELIAN SCANNER: NATIVE BARCODE DETECTOR"
-                );
-
-                if (message) {
-
-                    message.textContent =
-                        "Scanner aktif. Arahkan barcode ke kamera...";
+                if (currentSession !== this.sessionId) {
+                    return;
                 }
 
-                this.startNativeScanner(
-                    currentSession,
-                    video,
-                    message
-                );
+                const tracks = video.srcObject
+                    ? video.srcObject.getVideoTracks()
+                    : [];
 
-            } else {
+                if (tracks.length > 0) {
 
-                console.info(
-                    "PEMBELIAN SCANNER: ZXING MULTI FORMAT"
-                );
+                    const track = tracks[0];
 
-                if (message) {
+                    this.stream = video.srcObject;
 
-                    message.textContent =
-                        "Mengaktifkan scanner kompatibilitas...";
+                    const capabilities =
+                        track.getCapabilities
+                            ? track.getCapabilities()
+                            : {};
+
+                    const advanced = {};
+
+                    /*
+                     * Autofocus kontinu jika didukung.
+                     */
+
+                    if (
+                        Array.isArray(capabilities.focusMode) &&
+                        capabilities.focusMode.includes("continuous")
+                    ) {
+                        advanced.focusMode = "continuous";
+                    }
+
+                    /*
+                     * Tidak memaksakan zoom.
+                     * Zoom digital berlebihan dapat membuat
+                     * gambar lebih buram dan memperlambat decoding.
+                     */
+
+                    if (
+                        Object.keys(advanced).length > 0 &&
+                        track.applyConstraints
+                    ) {
+
+                        await track.applyConstraints({
+                            advanced: [advanced]
+                        });
+                    }
                 }
 
-                await this.startZXingFallback(
-                    currentSession,
-                    video,
-                    message
+            } catch (cameraEnhanceError) {
+
+                console.warn(
+                    "CAMERA OPTIMIZATION TIDAK TERSEDIA:",
+                    cameraEnhanceError
                 );
             }
 
@@ -525,7 +679,9 @@ const PembelianBarcodeScanner = {
                 errorMessage =
                     "Kamera sedang digunakan aplikasi lain.";
 
-            } else if (error.name === "OverconstrainedError") {
+            } else if (
+                error.name === "OverconstrainedError"
+            ) {
 
                 errorMessage =
                     "Pengaturan kamera tidak didukung perangkat.";
@@ -549,559 +705,6 @@ const PembelianBarcodeScanner = {
     },
 
     /* ======================================
-       INISIALISASI NATIVE BARCODE DETECTOR
-    ====================================== */
-
-    async initializeNativeReader() {
-
-        try {
-
-            const BarcodeDetectorClass =
-                window.BarcodeDetector;
-
-            if (!BarcodeDetectorClass) {
-                return false;
-            }
-
-            if (
-                !BarcodeDetectorClass.getSupportedFormats
-            ) {
-                return false;
-            }
-
-            const supportedFormats =
-                await BarcodeDetectorClass.getSupportedFormats();
-
-            if (!Array.isArray(supportedFormats)) {
-                return false;
-            }
-
-            /*
-             * Native digunakan hanya jika seluruh format
-             * yang ditentukan tersedia.
-             *
-             * Jika tidak lengkap, gunakan ZXing MultiFormat.
-             */
-
-            const missingFormats =
-                this.supportedBarcodeFormats.filter(
-                    format => !supportedFormats.includes(format)
-                );
-
-            if (missingFormats.length > 0) {
-
-                console.info(
-                    "NATIVE BARCODE FORMAT TIDAK LENGKAP:",
-                    missingFormats
-                );
-
-                return false;
-            }
-
-            this.detector =
-                new BarcodeDetectorClass({
-                    formats: this.supportedBarcodeFormats
-                });
-
-            return true;
-
-        } catch (error) {
-
-            console.warn(
-                "NATIVE BARCODE DETECTOR ERROR:",
-                error
-            );
-
-            this.detector = null;
-
-            return false;
-        }
-    },
-
-    /* ======================================
-       NATIVE SCANNER LOOP
-    ====================================== */
-
-    startNativeScanner(
-        currentSession,
-        video,
-        message
-    ) {
-
-        this.nativeScanning = true;
-        this.scanning = true;
-
-        this.detectBusy = false;
-        this.lastFrameTime = 0;
-
-        const scanFrame = async (timestamp) => {
-
-            if (
-                currentSession !== this.sessionId ||
-                !this.sessionActive ||
-                !this.scanning ||
-                !this.nativeScanning
-            ) {
-                return;
-            }
-
-            /*
-             * Batasi proses decoding sekitar 12 FPS.
-             * Menghindari penggunaan CPU berlebihan.
-             */
-
-            if (
-                timestamp - this.lastFrameTime < 80 ||
-                this.detectBusy
-            ) {
-
-                this.animationFrameId =
-                    requestAnimationFrame(scanFrame);
-
-                return;
-            }
-
-            this.lastFrameTime = timestamp;
-
-            this.detectBusy = true;
-
-            try {
-
-                if (
-                    video.readyState <
-                    HTMLMediaElement.HAVE_CURRENT_DATA
-                ) {
-                    return;
-                }
-
-                const results =
-                    await this.detector.detect(video);
-
-                if (
-                    currentSession !== this.sessionId ||
-                    !this.sessionActive ||
-                    !this.scanning
-                ) {
-                    return;
-                }
-
-                this.scanCount++;
-
-                if (
-                    !results ||
-                    results.length === 0
-                ) {
-                    return;
-                }
-
-                const result = results[0];
-
-                const barcode = String(
-                    result.rawValue || ""
-                ).trim();
-
-                if (!barcode) {
-                    return;
-                }
-
-                await this.onBarcodeDetected(
-                    barcode,
-                    currentSession,
-                    message
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "NATIVE BARCODE DETECT ERROR:",
-                    error
-                );
-
-                /*
-                 * Jika native gagal ketika berjalan,
-                 * lanjutkan dengan ZXing pada stream yang sama.
-                 */
-
-                if (
-                    currentSession === this.sessionId &&
-                    this.sessionActive &&
-                    this.scanning
-                ) {
-
-                    this.stopNativeScanner();
-
-                    if (message) {
-
-                        message.textContent =
-                            "Beralih ke scanner kompatibilitas...";
-                    }
-
-                    await this.startZXingFallback(
-                        currentSession,
-                        video,
-                        message
-                    );
-
-                    return;
-                }
-
-            } finally {
-
-                this.detectBusy = false;
-            }
-
-            if (
-                currentSession === this.sessionId &&
-                this.sessionActive &&
-                this.scanning &&
-                this.nativeScanning
-            ) {
-
-                this.animationFrameId =
-                    requestAnimationFrame(scanFrame);
-            }
-        };
-
-        this.animationFrameId =
-            requestAnimationFrame(scanFrame);
-    },
-
-    /* ======================================
-       ZXING MULTI FORMAT FALLBACK
-    ====================================== */
-
-    async startZXingFallback(
-        currentSession,
-        video,
-        message
-    ) {
-
-        try {
-
-            if (
-                !window.ZXingBrowser ||
-                !window.ZXingBrowser.BrowserMultiFormatReader
-            ) {
-
-                throw new Error(
-                    "ZXing MultiFormat Reader tidak tersedia. Periksa library @zxing/browser."
-                );
-            }
-
-            const ZXingCore = window.ZXing;
-
-            let hints = undefined;
-
-            /*
-             * Atur format barcode pada ZXing.
-             */
-
-            if (
-                ZXingCore &&
-                ZXingCore.DecodeHintType &&
-                ZXingCore.BarcodeFormat
-            ) {
-
-                const formats = [
-                    "EAN_13",
-                    "EAN_8",
-                    "UPC_A",
-                    "UPC_E",
-                    "CODE_128",
-                    "CODE_39",
-                    "ITF",
-                    "QR_CODE",
-                    "DATA_MATRIX"
-                ];
-
-                const possibleFormats =
-                    formats
-                        .map(name => ZXingCore.BarcodeFormat[name])
-                        .filter(format => format !== undefined);
-
-                hints = new Map();
-
-                hints.set(
-                    ZXingCore.DecodeHintType.POSSIBLE_FORMATS,
-                    possibleFormats
-                );
-            }
-
-            const ReaderClass =
-                window.ZXingBrowser.BrowserMultiFormatReader;
-
-            this.reader = new ReaderClass(hints);
-
-            if (
-                "timeBetweenDecodingAttempts" in this.reader
-            ) {
-
-                this.reader.timeBetweenDecodingAttempts = 50;
-            }
-
-            if (message) {
-
-                message.textContent =
-                    "Scanner aktif. Arahkan barcode ke kamera...";
-            }
-
-            this.scanning = true;
-            this.nativeScanning = false;
-
-            const controls =
-                await this.reader.decodeFromVideoElement(
-                    video,
-
-                    async (result, error, callbackControls) => {
-
-                        if (
-                            currentSession !== this.sessionId ||
-                            !this.sessionActive ||
-                            !this.scanning
-                        ) {
-                            return;
-                        }
-
-                        this.scanCount++;
-
-                        if (error || !result) {
-                            return;
-                        }
-
-                        const barcode = String(
-                            result.getText
-                                ? result.getText()
-                                : ""
-                        ).trim();
-
-                        if (!barcode) {
-                            return;
-                        }
-
-                        await this.onBarcodeDetected(
-                            barcode,
-                            currentSession,
-                            message,
-                            callbackControls
-                        );
-                    }
-                );
-
-            /*
-             * Cegah kontrol scanner aktif setelah modal ditutup
-             * saat ZXing masih mempersiapkan reader.
-             */
-
-            if (
-                currentSession !== this.sessionId ||
-                !this.sessionActive ||
-                !this.scanning
-            ) {
-
-                try {
-                    controls.stop();
-                } catch (error) {}
-
-                return;
-            }
-
-            this.controls = controls;
-
-        } catch (error) {
-
-            if (currentSession !== this.sessionId) {
-                return;
-            }
-
-            console.error(
-                "ZXING MULTI FORMAT ERROR:",
-                error
-            );
-
-            throw error;
-        }
-    },
-
-    /* ======================================
-       BARCODE BERHASIL DITEMUKAN
-    ====================================== */
-
-    async onBarcodeDetected(
-        barcode,
-        currentSession,
-        message,
-        callbackControls = null
-    ) {
-
-        if (
-            currentSession !== this.sessionId ||
-            !this.sessionActive ||
-            !this.scanning
-        ) {
-            return;
-        }
-
-        barcode = String(barcode || "").trim();
-
-        if (!barcode) {
-            return;
-        }
-
-        /*
-         * Tidak membatasi panjang barcode.
-         * EAN, UPC, CODE 128, CODE 39, QR, dan lainnya
-         * dapat diproses sesuai hasil reader.
-         */
-
-        const now = Date.now();
-
-        if (
-            barcode === this.lastBarcode &&
-            now - this.lastDetectedTime < 1000
-        ) {
-            return;
-        }
-
-        this.lastBarcode = barcode;
-        this.lastDetectedTime = now;
-
-        this.scanning = false;
-
-        this.stopNativeScanner();
-
-        this.playBeep("success");
-
-        if (message) {
-
-            message.textContent =
-                "Barcode ditemukan: " + barcode;
-        }
-
-        const activeControls =
-            callbackControls || this.controls;
-
-        if (activeControls) {
-
-            try {
-                activeControls.stop();
-            } catch (error) {
-
-                console.warn(
-                    "ZXING STOP ERROR:",
-                    error
-                );
-            }
-        }
-
-        this.controls = null;
-
-        await this.handleBarcode(barcode);
-    },
-
-    /* ======================================
-       OPTIMASI KAMERA
-    ====================================== */
-
-    optimizeCamera() {
-
-        try {
-
-            if (!this.stream) {
-                return;
-            }
-
-            const tracks =
-                this.stream.getVideoTracks();
-
-            if (!tracks.length) {
-                return;
-            }
-
-            const track = tracks[0];
-
-            const capabilities =
-                track.getCapabilities
-                    ? track.getCapabilities()
-                    : {};
-
-            const advanced = {};
-
-            if (
-                Array.isArray(capabilities.focusMode) &&
-                capabilities.focusMode.includes("continuous")
-            ) {
-
-                advanced.focusMode = "continuous";
-            }
-
-            if (capabilities.zoom) {
-
-                const minZoom =
-                    Number(capabilities.zoom.min);
-
-                const maxZoom =
-                    Number(capabilities.zoom.max);
-
-                const targetZoom = Math.max(
-                    minZoom,
-                    Math.min(maxZoom, 1.5)
-                );
-
-                if (
-                    targetZoom >= minZoom &&
-                    targetZoom <= maxZoom
-                ) {
-
-                    advanced.zoom = targetZoom;
-                }
-            }
-
-            if (
-                Object.keys(advanced).length > 0 &&
-                track.applyConstraints
-            ) {
-
-                track.applyConstraints({
-                    advanced: [advanced]
-                }).catch(error => {
-
-                    console.warn(
-                        "CAMERA OPTIMIZATION TIDAK TERSEDIA:",
-                        error
-                    );
-                });
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "CAMERA OPTIMIZATION ERROR:",
-                error
-            );
-        }
-    },
-
-    /* ======================================
-       STOP NATIVE SCANNER
-    ====================================== */
-
-    stopNativeScanner() {
-
-        this.nativeScanning = false;
-
-        if (this.animationFrameId !== null) {
-
-            cancelAnimationFrame(
-                this.animationFrameId
-            );
-
-            this.animationFrameId = null;
-        }
-
-        this.detectBusy = false;
-    },
-
-    /* ======================================
        PROSES BARCODE
     ====================================== */
 
@@ -1121,7 +724,6 @@ const PembelianBarcodeScanner = {
         );
 
         if (message) {
-
             message.textContent =
                 "Barcode ditemukan: " + barcode;
         }
@@ -1138,7 +740,6 @@ const PembelianBarcodeScanner = {
                     !page ||
                     !PembelianMassal.items[index]
                 ) {
-
                     throw new Error(
                         "Baris item Pembelian Massal tidak ditemukan."
                     );
@@ -1152,10 +753,9 @@ const PembelianBarcodeScanner = {
 
             } else {
 
-                const barcodeInput =
-                    document.getElementById(
-                        "pembelian-barcode"
-                    );
+                const barcodeInput = document.getElementById(
+                    "pembelian-barcode"
+                );
 
                 if (barcodeInput) {
                     barcodeInput.value = barcode;
@@ -1183,13 +783,11 @@ const PembelianBarcodeScanner = {
 
             if (mode === "pembelian") {
 
-                const barcodeInput =
-                    document.getElementById(
-                        "pembelian-barcode"
-                    );
+                const barcodeInput = document.getElementById(
+                    "pembelian-barcode"
+                );
 
                 if (barcodeInput) {
-
                     barcodeInput.value = "";
                     barcodeInput.focus();
                 }
@@ -1211,10 +809,9 @@ const PembelianBarcodeScanner = {
             return;
         }
 
-        const closeButton =
-            document.getElementById(
-                "pembelian-barcode-scanner-close"
-            );
+        const closeButton = document.getElementById(
+            "pembelian-barcode-scanner-close"
+        );
 
         if (
             closeButton &&
@@ -1253,22 +850,18 @@ const PembelianBarcodeScanner = {
     close() {
 
         /*
-         * Invalidasi sesi sebelum menghentikan kamera.
+         * Invalidasi sesi terlebih dahulu.
          */
 
         this.sessionId++;
-
         this.sessionActive = false;
         this.scanning = false;
-
-        this.stopNativeScanner();
 
         if (this.controls) {
 
             try {
                 this.controls.stop();
             } catch (error) {
-
                 console.warn(
                     "ZXING STOP ERROR:",
                     error
@@ -1296,7 +889,9 @@ const PembelianBarcodeScanner = {
 
             try {
                 video.pause();
-            } catch (error) {}
+            } catch (error) {
+                // Video belum berjalan.
+            }
 
             if (video.srcObject) {
 
@@ -1306,7 +901,13 @@ const PembelianBarcodeScanner = {
 
                         try {
                             track.stop();
-                        } catch (error) {}
+                        } catch (error) {
+                            console.warn(
+                                "CAMERA TRACK STOP ERROR:",
+                                error
+                            );
+                        }
+
                     });
 
                 video.srcObject = null;
@@ -1314,21 +915,18 @@ const PembelianBarcodeScanner = {
         }
 
         this.detector = null;
-        this.reader = null;
 
         this.lastBarcode = "";
         this.lastDetectedTime = 0;
         this.scanCount = 0;
 
-        this.detectBusy = false;
-        this.lastFrameTime = 0;
-
         this.targetMode = "pembelian";
         this.targetIndex = -1;
 
         /*
-         * startPromise dibersihkan oleh finally
-         * pada startScanner().
+         * startPromise tidak dikosongkan secara manual.
+         * Startup yang masih berjalan akan membersihkannya
+         * melalui finally di startScanner().
          */
     },
 
@@ -1347,7 +945,6 @@ const PembelianBarcodeScanner = {
             try {
                 track.stop();
             } catch (error) {
-
                 console.warn(
                     "CAMERA TRACK STOP ERROR:",
                     error
