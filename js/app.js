@@ -27,6 +27,22 @@ async refreshData() {
         return;
     }
 
+    /* KONFIRMASI REFRESH */
+
+    const confirmed = await Dialog.confirm(
+        "Apakah Anda yakin refresh data dari server?",
+        {
+            title: "Konfirmasi Refresh Data",
+            confirmText: "Ya, Refresh",
+            cancelText: "Batal",
+            variant: "warning"
+        }
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
     this.refreshInProgress = true;
 
     const button =
@@ -71,10 +87,12 @@ async refreshData() {
                 !usersResult ||
                 usersResult.success !== true
             ) {
+
                 throw new Error(
                     usersResult?.message ||
                     "Gagal mengunduh data pengguna."
                 );
+
             }
 
         }
