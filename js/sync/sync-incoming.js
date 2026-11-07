@@ -1,3 +1,4 @@
+
 /* ======================================
    ROVIXA POS
    INCOMING SYNC - PEMBELIAN
@@ -9,6 +10,7 @@
    - PEMBELIAN
    - DETAIL PEMBELIAN
    - PEMBAYARAN PEMBELIAN
+   - STORE CONFIG
 
    TANPA PENJUALAN
    TANPA EXPENSE
@@ -583,6 +585,78 @@ const IncomingSync = {
 
 
     /* ======================================
+       STORE CONFIG
+
+       Memperbarui konfigurasi toko lokal
+       jika server mengirim storeConfig.
+
+       Jika server tidak mengirim properti
+       storeConfig, konfigurasi lokal
+       tidak diubah.
+    ====================================== */
+
+    async applyStoreConfig(data) {
+
+        if (
+            !Object.prototype.hasOwnProperty.call(
+                data,
+                "storeConfig"
+            )
+        ) {
+            return {
+                updated: false
+            };
+        }
+
+        const storeConfig = data.storeConfig;
+
+        if (
+            !storeConfig ||
+            typeof storeConfig !== "object" ||
+            Array.isArray(storeConfig)
+        ) {
+            throw new Error(
+                "Format Store Config dari server tidak valid."
+            );
+        }
+
+        if (
+            typeof StoreConfig === "undefined" ||
+            !StoreConfig.STORAGE_KEY
+        ) {
+            throw new Error(
+                "StoreConfig atau STORAGE_KEY tidak tersedia."
+            );
+        }
+
+        const newConfig = {
+            ...storeConfig
+        };
+
+        const serializedConfig =
+            JSON.stringify(newConfig);
+
+        if (!serializedConfig) {
+            throw new Error(
+                "Store Config gagal dikonversi."
+            );
+        }
+
+        localStorage.setItem(
+            StoreConfig.STORAGE_KEY,
+            serializedConfig
+        );
+
+        StoreConfig.config = newConfig;
+
+        return {
+            updated: true
+        };
+
+    },
+
+
+    /* ======================================
        APPLY SERVER CHANGES
     ====================================== */
 
@@ -597,11 +671,17 @@ const IncomingSync = {
                 pendingIds
             );
 
+        const storeConfigResult =
+            await this.applyStoreConfig(data);
+
         return {
 
             ...masterResult,
 
-            ...purchaseResult
+            ...purchaseResult,
+
+            storeConfigUpdated:
+                storeConfigResult.updated
 
         };
 
@@ -784,6 +864,9 @@ const IncomingSync = {
 
                 pembayaranPembelian:
                     result.pembayaranPembelian,
+
+                storeConfigUpdated:
+                    result.storeConfigUpdated,
 
                 pendingTransactions:
                     pendingIds.size

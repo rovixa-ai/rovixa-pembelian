@@ -15,245 +15,294 @@ const App = {
     INITIALIZE APPLICATION
     ======================================*/
 
-    async init() {
+    
+async init() {
 
-        Loading.show(
-            "Menyiapkan database dan memuat data aplikasi...",
+    Loading.show(
+        "Menyiapkan database dan memuat data aplikasi...",
+        "Memuat Aplikasi"
+    );
+
+    try {
+
+        Loading.update(
+            "Menginisialisasi database lokal...",
             "Memuat Aplikasi"
         );
 
-        try {
+        await DB.init();
 
-            Loading.update(
-                "Menginisialisasi database lokal...",
-                "Memuat Aplikasi"
+
+        /*======================================
+        PEMERIKSAAN BOOTSTRAP AWAL
+        ======================================*/
+
+        Loading.update(
+            "Memeriksa data lokal...",
+            "Memuat Aplikasi"
+        );
+
+        const bootstrapState =
+            await DB.get(
+                "config",
+                "lastBootstrap"
             );
 
-            await DB.init();
+        const isFirstBootstrap =
+            !bootstrapState ||
+            !bootstrapState.value;
 
-            Loading.update(
-                "Memuat konfigurasi toko...",
-                "Memuat Aplikasi"
-            );
+
+        /*======================================
+        MEMUAT STORE CONFIG
+
+        BOOTSTRAP PERTAMA:
+        Ambil konfigurasi dari server.
+
+        BOOTSTRAP SUDAH ADA:
+        Gunakan konfigurasi lokal.
+        Perubahan berikutnya diterima melalui
+        IncomingSync.
+        ======================================*/
+
+        Loading.update(
+            "Memuat konfigurasi toko...",
+            "Memuat Aplikasi"
+        );
+
+        if (isFirstBootstrap) {
 
             await StoreConfig.load();
 
-            Loading.update(
-                "Menyiapkan sinkronisasi data...",
-                "Memuat Aplikasi"
-            );
-
-            Sync.init();
-
-            /*======================================
-            DOWNLOAD DATA USER UNTUK LOGIN
-            ======================================*/
-
-            Loading.update(
-                "Memuat data pengguna...",
-                "Memuat Aplikasi"
-            );
+        } else {
 
             if (
-                typeof Download !== "undefined" &&
-                typeof Download.downloadUsers === "function"
+                typeof StoreConfig.loadLocal ===
+                "function"
             ) {
 
-                const usersResult =
-                    await Download.downloadUsers();
+                await StoreConfig.loadLocal();
 
-                if (
-                    !usersResult ||
-                    usersResult.success !== true
-                ) {
+            } else {
 
-                    console.warn(
-                        "Download user gagal:",
-                        usersResult?.message
-                    );
-
-                }
-
-            }
-
-            /*======================================
-            PEMERIKSAAN BOOTSTRAP AWAL
-            ======================================*/
-
-            Loading.update(
-                "Memeriksa data lokal...",
-                "Memuat Aplikasi"
-            );
-
-            const bootstrapState =
-                await DB.get(
-                    "config",
-                    "lastBootstrap"
+                throw new Error(
+                    "StoreConfig.loadLocal() tidak tersedia."
                 );
 
-            /*======================================
-            BOOTSTRAP PERTAMA
-            DOWNLOAD SELURUH DATA
-            ======================================*/
-
-            if (
-                !bootstrapState ||
-                !bootstrapState.value
-            ) {
-
-                Loading.update(
-                    "Mengunduh data awal Pembelian...",
-                    "Memuat Aplikasi"
-                );
-
-                const result =
-                    await Download.bootstrap();
-
-                if (
-                    !result ||
-                    result.success !== true
-                ) {
-
-                    console.warn(
-                        "Download bootstrap gagal:",
-                        result?.message
-                    );
-
-                }
-
             }
-
-            /*======================================
-            BOOTSTRAP SUDAH PERNAH BERHASIL
-            JALANKAN INCREMENTAL SYNC
-            ======================================*/
-
-            else {
-
-                Loading.update(
-                    "Memeriksa perubahan data server...",
-                    "Memuat Aplikasi"
-                );
-
-                if (
-                    typeof IncomingSync !== "undefined" &&
-                    typeof IncomingSync.sync === "function"
-                ) {
-
-                    const syncResult =
-                        await IncomingSync.sync();
-
-                    if (
-                        !syncResult ||
-                        syncResult.success !== true
-                    ) {
-
-                        console.warn(
-                            "Incoming sync gagal:",
-                            syncResult?.message
-                        );
-
-                    }
-
-                } else {
-
-                    console.warn(
-                        "IncomingSync tidak tersedia. " +
-                        "Data lokal tetap digunakan."
-                    );
-
-                }
-
-            }
-
-            /*======================================
-            VALIDASI SESSION LOGIN
-            ======================================*/
-
-            Loading.update(
-                "Memeriksa sesi pengguna...",
-                "Memuat Aplikasi"
-            );
-
-            let sessionResult = {
-                success: false,
-                loggedIn: false
-            };
-
-            if (
-                typeof Auth !== "undefined" &&
-                typeof Auth.validateSession === "function"
-            ) {
-
-                sessionResult =
-                    await Auth.validateSession();
-
-            }
-
-            /*======================================
-            SESSION VALID
-            BUKA HALAMAN PEMBELIAN
-            ======================================*/
-
-            if (
-                sessionResult &&
-                sessionResult.success === true &&
-                sessionResult.loggedIn === true
-            ) {
-
-                Loading.update(
-                    "Menyiapkan tampilan aplikasi...",
-                    "Memuat Aplikasi"
-                );
-
-                this.renderHeader();
-
-                Router.go("pembelian");
-
-            }
-
-            /*======================================
-            SESSION TIDAK VALID
-            TAMPILKAN LOGIN
-            ======================================*/
-
-            else {
-
-                if (
-                    typeof Login === "undefined" ||
-                    typeof Login.init !== "function"
-                ) {
-
-                    throw new Error(
-                        "Modul Login tidak tersedia. " +
-                        "Pastikan js/auth.js dan js/login.js sudah dimuat."
-                    );
-
-                }
-
-                await Login.init();
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "APP PEMBELIAN INIT ERROR:",
-                error
-            );
-
-            Dialog.error(
-                error.message ||
-                "Gagal memuat aplikasi."
-            );
-
-        } finally {
-
-            Loading.hide();
 
         }
 
-    },
+
+        /*======================================
+        MENYIAPKAN SINKRONISASI
+        ======================================*/
+
+        Loading.update(
+            "Menyiapkan sinkronisasi data...",
+            "Memuat Aplikasi"
+        );
+
+        Sync.init();
+
+
+        /*======================================
+        DOWNLOAD DATA USER UNTUK LOGIN
+        ======================================*/
+
+        Loading.update(
+            "Memuat data pengguna...",
+            "Memuat Aplikasi"
+        );
+
+        if (
+            typeof Download !== "undefined" &&
+            typeof Download.downloadUsers === "function"
+        ) {
+
+            const usersResult =
+                await Download.downloadUsers();
+
+            if (
+                !usersResult ||
+                usersResult.success !== true
+            ) {
+
+                console.warn(
+                    "Download user gagal:",
+                    usersResult?.message
+                );
+
+            }
+
+        }
+
+
+        /*======================================
+        BOOTSTRAP PERTAMA
+        DOWNLOAD SELURUH DATA
+        ======================================*/
+
+        if (isFirstBootstrap) {
+
+            Loading.update(
+                "Mengunduh data awal Pembelian...",
+                "Memuat Aplikasi"
+            );
+
+            const result =
+                await Download.bootstrap();
+
+            if (
+                !result ||
+                result.success !== true
+            ) {
+
+                console.warn(
+                    "Download bootstrap gagal:",
+                    result?.message
+                );
+
+            }
+
+        }
+
+
+        /*======================================
+        BOOTSTRAP SUDAH PERNAH BERHASIL
+        JALANKAN INCREMENTAL SYNC
+        ======================================*/
+
+        else {
+
+            Loading.update(
+                "Memeriksa perubahan data server...",
+                "Memuat Aplikasi"
+            );
+
+            if (
+                typeof IncomingSync !== "undefined" &&
+                typeof IncomingSync.sync === "function"
+            ) {
+
+                const syncResult =
+                    await IncomingSync.sync();
+
+                if (
+                    !syncResult ||
+                    syncResult.success !== true
+                ) {
+
+                    console.warn(
+                        "Incoming sync gagal:",
+                        syncResult?.message
+                    );
+
+                }
+
+            } else {
+
+                console.warn(
+                    "IncomingSync tidak tersedia. " +
+                    "Data lokal tetap digunakan."
+                );
+
+            }
+
+        }
+
+
+        /*======================================
+        VALIDASI SESSION LOGIN
+        ======================================*/
+
+        Loading.update(
+            "Memeriksa sesi pengguna...",
+            "Memuat Aplikasi"
+        );
+
+        let sessionResult = {
+            success: false,
+            loggedIn: false
+        };
+
+        if (
+            typeof Auth !== "undefined" &&
+            typeof Auth.validateSession === "function"
+        ) {
+
+            sessionResult =
+                await Auth.validateSession();
+
+        }
+
+
+        /*======================================
+        SESSION VALID
+        BUKA HALAMAN PEMBELIAN
+        ======================================*/
+
+        if (
+            sessionResult &&
+            sessionResult.success === true &&
+            sessionResult.loggedIn === true
+        ) {
+
+            Loading.update(
+                "Menyiapkan tampilan aplikasi...",
+                "Memuat Aplikasi"
+            );
+
+            this.renderHeader();
+
+            Router.go("pembelian");
+
+        }
+
+
+        /*======================================
+        SESSION TIDAK VALID
+        TAMPILKAN LOGIN
+        ======================================*/
+
+        else {
+
+            if (
+                typeof Login === "undefined" ||
+                typeof Login.init !== "function"
+            ) {
+
+                throw new Error(
+                    "Modul Login tidak tersedia. " +
+                    "Pastikan js/auth.js dan js/login.js sudah dimuat."
+                );
+
+            }
+
+            await Login.init();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "APP PEMBELIAN INIT ERROR:",
+            error
+        );
+
+        Dialog.error(
+            error.message ||
+            "Gagal memuat aplikasi."
+        );
+
+    } finally {
+
+        Loading.hide();
+
+    }
+
+},
+
 
 
     /*======================================
