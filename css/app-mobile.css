@@ -332,6 +332,68 @@ body {
     outline-offset: 2px;
 }
 
+
+/* ======================================
+   HEADER REFRESH BUTTON
+   ICON ONLY
+====================================== */
+
+.header-refresh-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+
+    margin: 0;
+    padding: 5px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f0fbf5 100%
+        );
+
+    border: 1px solid rgba(16, 185, 129, 0.22);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 3px 9px rgba(5, 150, 105, 0.045);
+
+    box-sizing: border-box;
+}
+
+.header-refresh-icon {
+    display: block;
+
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+}
+
+.header-refresh-button:hover {
+    background: #ecfdf5;
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+.header-refresh-button:active {
+    transform: scale(0.94);
+}
+
+.header-refresh-button:focus-visible {
+    outline: 2px solid var(--app-emerald);
+    outline-offset: 2px;
+}
+
 /* ======================================
    HEADER ADMIN / NAMA USER
 ====================================== */

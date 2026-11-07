@@ -47,43 +47,57 @@ const AppMobileRender = {
 
             </div>
 
-            <div class="header-actions">
+           <div class="header-actions">
 
-                <button
-                    type="button"
-                    class="header-report-button"
-                    id="header-laporan-pembelian"
-                >
-                    📊
-                    <p>Laporan</p>
-                </button>
+    <button
+        type="button"
+        class="header-report-button"
+        id="header-laporan-pembelian"
+    >
+        📊
+        <p>Laporan</p>
+    </button>
 
-                <div class="header-admin">
-                    ${
-                        currentUser?.nama ||
-                        currentUser?.username ||
-                        "Admin"
-                    }
-                </div>
+   
 
-                <button
-                    type="button"
-                    class="header-logout-button"
-                    id="header-logout"
-                    aria-label="Logout"
-                    title="Logout"
-                >
-                    <img
-                        src="icons/logout.png"
-                        alt=""
-                        class="header-logout-icon"
-                    >
-                    
-                    
-                </button>
+    <div class="header-admin">
+        ${
+            currentUser?.nama ||
+            currentUser?.username ||
+            "Admin"
+        }
+    </div>
 
-            </div>
+     <!-- REFRESH -->
+    <button
+    type="button"
+    class="header-refresh-button"
+    id="header-refresh"
+    aria-label="Refresh"
+    title="Refresh"
+>
+    <img
+        src="icons/refresh.png"
+        alt=""
+        class="header-refresh-icon"
+    >
+</button>
 
+    <button
+        type="button"
+        class="header-logout-button"
+        id="header-logout"
+        aria-label="Logout"
+        title="Logout"
+    >
+        <img
+            src="icons/logout.png"
+            alt=""
+            class="header-logout-icon"
+        >
+    </button>
+
+</div>
         `;
 
         document.getElementById(
